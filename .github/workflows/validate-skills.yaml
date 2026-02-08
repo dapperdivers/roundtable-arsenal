@@ -1,0 +1,123 @@
+name: Validate Skills
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install pyyaml
+
+      - name: Validate SKILL.md frontmatter
+        run: |
+          #!/usr/bin/env python3
+          import yaml
+          import glob
+          import sys
+
+          errors = []
+          skill_files = glob.glob("skills/**/SKILL.md", recursive=True)
+
+          if not skill_files:
+              print("ERROR: No SKILL.md files found!")
+              sys.exit(1)
+
+          print(f"Found {len(skill_files)} SKILL.md files")
+
+          for path in skill_files:
+              with open(path) as f:
+                  content = f.read()
+
+              # Check for YAML frontmatter
+              if not content.startswith("---"):
+                  errors.append(f"{path}: Missing YAML frontmatter (must start with ---)")
+                  continue
+
+              parts = content.split("---", 2)
+              if len(parts) < 3:
+                  errors.append(f"{path}: Invalid frontmatter format")
+                  continue
+
+              try:
+                  meta = yaml.safe_load(parts[1])
+              except yaml.YAMLError as e:
+                  errors.append(f"{path}: Invalid YAML: {e}")
+                  continue
+
+              if not isinstance(meta, dict):
+                  errors.append(f"{path}: Frontmatter is not a mapping")
+                  continue
+
+              if "name" not in meta:
+                  errors.append(f"{path}: Missing required field 'name'")
+              if "description" not in meta:
+                  errors.append(f"{path}: Missing required field 'description'")
+
+              print(f"  ✓ {path} — {meta.get('name', '?')}")
+
+          if errors:
+              print(f"\n{len(errors)} error(s) found:")
+              for e in errors:
+                  print(f"  ✗ {e}")
+              sys.exit(1)
+
+          print("\nAll SKILL.md files valid! ✓")
+        shell: python
+
+      - name: Check script permissions
+        run: |
+          echo "Checking script files..."
+          errors=0
+          while IFS= read -r script; do
+            if [[ ! -x "$script" ]]; then
+              echo "  ✗ Not executable: $script"
+              errors=$((errors + 1))
+            else
+              echo "  ✓ $script"
+            fi
+          done < <(find skills -name "*.sh" -o -name "*.py" | sort)
+
+          if [[ $errors -gt 0 ]]; then
+            echo ""
+            echo "$errors script(s) are not executable."
+            echo "Fix with: chmod +x <script>"
+            exit 1
+          fi
+          echo ""
+          echo "All scripts are executable! ✓"
+
+      - name: Basic shell lint
+        run: |
+          echo "Checking shell scripts for common issues..."
+          find skills -name "*.sh" | while read -r f; do
+            if ! bash -n "$f" 2>/dev/null; then
+              echo "  ✗ Syntax error: $f"
+              exit 1
+            fi
+            echo "  ✓ $f"
+          done
+          echo "Shell scripts OK! ✓"
+
+      - name: Basic Python syntax check
+        run: |
+          echo "Checking Python scripts for syntax errors..."
+          find skills -name "*.py" | while read -r f; do
+            if ! python3 -m py_compile "$f" 2>/dev/null; then
+              echo "  ✗ Syntax error: $f"
+              exit 1
+            fi
+            echo "  ✓ $f"
+          done
+          echo "Python scripts OK! ✓"
