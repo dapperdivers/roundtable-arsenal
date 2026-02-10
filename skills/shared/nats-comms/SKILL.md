@@ -93,6 +93,16 @@ You (OpenClaw) → curl localhost:8080/publish → nats-bridge sidecar → NATS 
 
 The nats-bridge sidecar handles all NATS connection management, JetStream publishing, and reconnection. You just POST JSON to `localhost:8080/publish`.
 
+## When You Receive a NATS Task
+
+When a task arrives via NATS, your message will contain the task instructions. After completing the work, **always send results back via NATS** using `nats-respond.sh`:
+
+```bash
+bash /path/to/skills/shared/nats-comms/scripts/nats-respond.sh "<task-id>" "<domain>" '{"summary":"Your result","details":"..."}'
+```
+
+The task ID and domain will be included in the task message.
+
 ## Important Notes
 
 - The bridge runs on **localhost:8080** — same pod, no auth needed
@@ -100,3 +110,4 @@ The nats-bridge sidecar handles all NATS connection management, JetStream publis
 - Your fleet ID and agent ID are available via `GET /info`
 - Messages are published to JetStream (durable, persisted)
 - Keep payloads under 1MB
+- **No `jq` required** — scripts use only curl, grep, sed, cut
