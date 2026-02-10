@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # nats-respond.sh — Respond to a NATS task with a properly formatted envelope.
 # Usage: nats-respond.sh <task-id> <domain> '<payload-json>'
+# No external dependencies (no jq required).
 set -euo pipefail
 
 BRIDGE_URL="${NATS_BRIDGE_URL:-http://localhost:8080}"
@@ -8,46 +9,31 @@ TASK_ID="${1:?Usage: nats-respond.sh <task-id> <domain> '<payload-json>'}"
 DOMAIN="${2:?Usage: nats-respond.sh <task-id> <domain> '<payload-json>'}"
 PAYLOAD="${3:?Usage: nats-respond.sh <task-id> <domain> '<payload-json>'}"
 
-# Validate payload JSON
-if ! echo "$PAYLOAD" | jq empty 2>/dev/null; then
-  echo "ERROR: payload is not valid JSON" >&2
-  exit 1
-fi
-
 # Get bridge info for fleet/agent IDs
 INFO=$(curl -sf "${BRIDGE_URL}/info" 2>/dev/null) || {
   echo "ERROR: Cannot reach bridge at ${BRIDGE_URL}/info" >&2
   exit 1
 }
 
-FLEET_ID=$(echo "$INFO" | jq -r '.fleetId')
-AGENT_ID=$(echo "$INFO" | jq -r '.agentId')
-RESULT_PREFIX=$(echo "$INFO" | jq -r '.resultPrefix')
+# Parse info without jq — extract using grep/sed
+FLEET_ID=$(echo "$INFO" | grep -o '"fleetId":"[^"]*"' | head -1 | cut -d'"' -f4)
+AGENT_ID=$(echo "$INFO" | grep -o '"agentId":"[^"]*"' | head -1 | cut -d'"' -f4)
+RESULT_PREFIX=$(echo "$INFO" | grep -o '"resultPrefix":"[^"]*"' | head -1 | cut -d'"' -f4)
+
+if [ -z "$FLEET_ID" ] || [ -z "$AGENT_ID" ]; then
+  echo "ERROR: Could not parse bridge info" >&2
+  exit 1
+fi
 
 # Build subject
 SUBJECT="${RESULT_PREFIX}.${DOMAIN}.${TASK_ID}"
 
 # Build envelope
-ENVELOPE=$(jq -n \
-  --arg id "$TASK_ID" \
-  --arg fleetId "$FLEET_ID" \
-  --arg from "$AGENT_ID" \
-  --arg to "tim" \
-  --arg ts "$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
-  --argjson payload "$PAYLOAD" \
-  '{
-    id: $id,
-    fleetId: $fleetId,
-    type: "task.result",
-    from: $from,
-    to: $to,
-    timestamp: $ts,
-    payload: $payload
-  }')
+TIMESTAMP=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+ENVELOPE="{\"id\":\"${TASK_ID}\",\"fleetId\":\"${FLEET_ID}\",\"type\":\"task.result\",\"from\":\"${AGENT_ID}\",\"to\":\"tim\",\"timestamp\":\"${TIMESTAMP}\",\"payload\":${PAYLOAD}}"
 
-# Publish
-PUBLISH_BODY=$(jq -n --arg subject "$SUBJECT" --argjson data "$ENVELOPE" \
-  '{subject: $subject, data: $data}')
+# Publish via bridge
+PUBLISH_BODY="{\"subject\":\"${SUBJECT}\",\"data\":${ENVELOPE}}"
 
 RESPONSE=$(curl -sf -X POST "${BRIDGE_URL}/publish" \
   -H "Content-Type: application/json" \
@@ -57,4 +43,4 @@ RESPONSE=$(curl -sf -X POST "${BRIDGE_URL}/publish" \
 }
 
 echo "Published result to ${SUBJECT}"
-echo "$RESPONSE" | jq .
+echo "$RESPONSE"
