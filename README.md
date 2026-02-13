@@ -1,82 +1,104 @@
-# ⚔️ Roundtable Arsenal
+# Round Table Arsenal
 
-> *The shared armory for the [Knights of the Round Table](https://github.com/dapperdivers/roundtable)*
+Skills, templates, and resources for Knights of the Round Table agents.
 
-This repository contains **skills**, **protocols**, and **templates** used by Knight agents in the Round Table system. It is delivered to knight pods via **git-sync** and consumed by [OpenClaw](https://github.com/openclaw)-powered agents.
+All skills follow the open [Agent Skills](https://agentskills.io) standard.
 
-## Architecture
-
-Each knight runs as a **3-container pod**:
-
-| Container | Role |
-|-----------|------|
-| **openclaw** | The LLM agent runtime |
-| **nats-bridge** | Message bus integration (inter-knight comms) |
-| **git-sync** | Pulls this repo on a schedule, delivering skills to the agent |
-
-Knights select which skills they need via `extraDirs` configuration in their Helm values. A security-focused knight like **Galahad** might mount `skills/security/*` and `skills/shared/*`, while a comms knight might only need `skills/comms/*`.
-
-## Directory Structure
+## Structure
 
 ```
 roundtable-arsenal/
-├── skills/          # OpenClaw-compatible skill directories
-│   ├── shared/      # Skills available to all knights
-│   ├── security/    # Cybersecurity skills (feeds, CVEs, threat intel)
-│   ├── comms/       # Communication skills (email, notifications)
-│   └── intel/       # Intelligence gathering (weather, news, solar)
-├── protocols/       # Natural language workflow instructions
-├── templates/       # Output format definitions (Handlebars-style)
-└── .github/         # CI/CD workflows
+├── shared/                    # Tier 1: Base capabilities (ALL knights)
+│   ├── nats-comms/            # NATS JetStream messaging
+│   ├── web-search/            # SearXNG metasearch
+│   ├── web-fetch/             # URL content extraction
+│   └── report-generator/      # Template-based report rendering
+│
+├── security/                  # Tier 2: Security domain (Galahad)
+│   ├── opencti-intel/         # OpenCTI GraphQL queries
+│   ├── threat-briefing/       # Daily/weekly briefing generation
+│   ├── cve-deep-dive/         # CVE vulnerability analysis
+│   └── rss-analyzer/          # Security RSS feed analysis
+│
+├── intel/                     # Tier 2: Intelligence domain
+│   ├── news-aggregator/       # Tech/security news feeds
+│   ├── solar-weather/         # NOAA space weather
+│   └── weather-fetch/         # Weather data
+│
+└── comms/                     # Tier 2: Communications domain
+    ├── email-triage/          # Outlook email triage
+    └── notification-digest/   # Notification aggregation
 ```
 
-## Skills
+## Skill Tiers
 
-Skills are **OpenClaw-compatible skill directories** — each contains a `SKILL.md` (with YAML frontmatter) and a `scripts/` directory with executable tools.
+| Tier | Directory | Delivery | Who Gets It |
+|------|-----------|----------|-------------|
+| **Shared** | `shared/` | git-sync to all knights | Every knight |
+| **Domain** | `security/`, `intel/`, `comms/` | git-sync per knight config | Knights with matching domain |
+
+## Skill Format (agentskills.io)
+
+Each skill is a directory with:
+
+```
+skill-name/
+├── SKILL.md              # Required — frontmatter + instructions
+├── scripts/              # Executable helpers (bash, python)
+├── references/           # On-demand documentation
+└── assets/               # Templates, schemas, static data
+```
+
+### SKILL.md Frontmatter
 
 ```yaml
-# Example SKILL.md frontmatter
 ---
-name: cve-lookup
-description: Query NVD/CVE databases for vulnerability information.
+name: skill-name
+description: What this skill does and when to use it.
+allowed-tools: Bash(curl:*) Read
+metadata:
+  author: roundtable
+  version: "1.0"
+  tier: shared|security|intel|comms
 ---
 ```
 
-The agent reads `SKILL.md` to understand what the skill does and how to invoke its scripts.
+### Progressive Disclosure
 
-## Protocols
+1. **Startup** — Only `name` + `description` loaded (~100 tokens per skill)
+2. **Activation** — Full SKILL.md instructions loaded when task matches
+3. **Execution** — `references/` and `assets/` loaded on-demand by the agent
 
-Protocols are **natural language workflow instructions** that knights follow step by step. They describe *when* to run, *what skills to use*, and *what output to produce*. Think of them as runbooks for LLM agents.
+## Git-Sync Configuration
 
-Example: The `security/daily-briefing.md` protocol tells a knight how to gather threat data, analyze it, and produce a formatted briefing using the daily briefing template.
-
-## Templates
-
-Templates define the **output format** for reports and digests. They use Handlebars-style placeholders (`{{variable}}`) that get filled in by the report-generator skill or by the agent directly.
-
-## Delivery via git-sync
-
-The git-sync sidecar in each knight's pod clones this repository and keeps it up to date. Skills appear as local directories that the OpenClaw agent can reference. Configuration example:
+Knights use git-sync sidecars to pull skills. Configure which tiers each knight receives:
 
 ```yaml
-# In knight's Helm values
+# Example: Galahad (security knight)
 gitSync:
-  repo: https://github.com/dapperdivers/roundtable-arsenal.git
-  branch: main
-  period: 300s  # sync every 5 minutes
-
-extraDirs:
-  - /arsenal/skills/shared
-  - /arsenal/skills/security
+  repo: https://github.com/dapperdivers/roundtable-arsenal
+  paths:
+    - shared      # Base capabilities
+    - security    # Domain expertise
 ```
 
-## Contributing
+```yaml
+# Example: Future herald (intel knight)
+gitSync:
+  repo: https://github.com/dapperdivers/roundtable-arsenal
+  paths:
+    - shared
+    - intel
+    - comms
+```
 
-1. Add skills following the `SKILL.md` + `scripts/` convention
-2. Ensure scripts have proper argument parsing and `--help` flags
-3. Add protocols for any multi-step workflows
-4. CI validates all `SKILL.md` files have required frontmatter
+## Validation
+
+```bash
+# Validate all skills
+npx agentskills validate shared/ security/ intel/ comms/
+```
 
 ## License
 
-[MIT](LICENSE)
+MIT

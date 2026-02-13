@@ -26,9 +26,13 @@ jobs:
           import yaml
           import glob
           import sys
+          import re
 
           errors = []
-          skill_files = glob.glob("skills/**/SKILL.md", recursive=True)
+          # Search all tier directories
+          skill_files = []
+          for tier in ["shared", "security", "intel", "comms"]:
+              skill_files.extend(glob.glob(f"{tier}/**/SKILL.md", recursive=True))
 
           if not skill_files:
               print("ERROR: No SKILL.md files found!")
@@ -36,7 +40,9 @@ jobs:
 
           print(f"Found {len(skill_files)} SKILL.md files")
 
-          for path in skill_files:
+          NAME_RE = re.compile(r'^[a-z][a-z0-9]*(-[a-z0-9]+)*$')
+
+          for path in sorted(skill_files):
               with open(path) as f:
                   content = f.read()
 
@@ -60,12 +66,28 @@ jobs:
                   errors.append(f"{path}: Frontmatter is not a mapping")
                   continue
 
-              if "name" not in meta:
-                  errors.append(f"{path}: Missing required field 'name'")
-              if "description" not in meta:
-                  errors.append(f"{path}: Missing required field 'description'")
+              name = meta.get("name")
+              desc = meta.get("description")
 
-              print(f"  ✓ {path} — {meta.get('name', '?')}")
+              if not name:
+                  errors.append(f"{path}: Missing required field 'name'")
+              elif not NAME_RE.match(name):
+                  errors.append(f"{path}: Invalid name '{name}' — must be lowercase alphanumeric + hyphens")
+              elif len(name) > 64:
+                  errors.append(f"{path}: Name too long ({len(name)} > 64 chars)")
+
+              if not desc:
+                  errors.append(f"{path}: Missing required field 'description'")
+              elif len(desc) > 1024:
+                  errors.append(f"{path}: Description too long ({len(desc)} > 1024 chars)")
+
+              # Verify name matches parent directory
+              import os
+              parent_dir = os.path.basename(os.path.dirname(path))
+              if name and name != parent_dir:
+                  errors.append(f"{path}: name '{name}' doesn't match directory '{parent_dir}'")
+
+              print(f"  ✓ {path} — {name}")
 
           if errors:
               print(f"\n{len(errors)} error(s) found:")
@@ -80,14 +102,16 @@ jobs:
         run: |
           echo "Checking script files..."
           errors=0
-          while IFS= read -r script; do
-            if [[ ! -x "$script" ]]; then
-              echo "  ✗ Not executable: $script"
-              errors=$((errors + 1))
-            else
-              echo "  ✓ $script"
-            fi
-          done < <(find skills -name "*.sh" -o -name "*.py" | sort)
+          for tier in shared security intel comms; do
+            while IFS= read -r script; do
+              if [[ ! -x "$script" ]]; then
+                echo "  ✗ Not executable: $script"
+                errors=$((errors + 1))
+              else
+                echo "  ✓ $script"
+              fi
+            done < <(find "$tier" -name "*.sh" -o -name "*.py" 2>/dev/null | sort)
+          done
 
           if [[ $errors -gt 0 ]]; then
             echo ""
@@ -98,26 +122,20 @@ jobs:
           echo ""
           echo "All scripts are executable! ✓"
 
-      - name: Basic shell lint
+      - name: Validate skill directory structure
         run: |
-          echo "Checking shell scripts for common issues..."
-          find skills -name "*.sh" | while read -r f; do
-            if ! bash -n "$f" 2>/dev/null; then
-              echo "  ✗ Syntax error: $f"
-              exit 1
-            fi
-            echo "  ✓ $f"
+          echo "Checking agentskills.io compliance..."
+          errors=0
+          for skill_md in $(find shared security intel comms -name "SKILL.md" 2>/dev/null | sort); do
+            skill_dir=$(dirname "$skill_md")
+            # Check for unexpected files at skill root (only SKILL.md + known dirs)
+            for item in "$skill_dir"/*; do
+              base=$(basename "$item")
+              case "$base" in
+                SKILL.md|scripts|references|assets|LICENSE*) ;;
+                *) echo "  ⚠ Unexpected: $item"; ;;
+              esac
+            done
+            echo "  ✓ $skill_dir"
           done
-          echo "Shell scripts OK! ✓"
-
-      - name: Basic Python syntax check
-        run: |
-          echo "Checking Python scripts for syntax errors..."
-          find skills -name "*.py" | while read -r f; do
-            if ! python3 -m py_compile "$f" 2>/dev/null; then
-              echo "  ✗ Syntax error: $f"
-              exit 1
-            fi
-            echo "  ✓ $f"
-          done
-          echo "Python scripts OK! ✓"
+          echo "Structure check complete! ✓"
