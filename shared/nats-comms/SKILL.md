@@ -1,47 +1,56 @@
 ---
 name: nats-comms
-description: Communicate with the Round Table via NATS JetStream. Use when returning task results, publishing reports, or sending messages to Tim or other knights. Every knight has a nats-bridge sidecar on localhost:8080.
-allowed-tools: Bash(curl:*) Read
+description: Publish additional NATS messages beyond the automatic task result. Use when you need to send reports, alerts, or data to specific NATS subjects outside the normal task response flow.
+allowed-tools: Bash(nats:*) Read
 metadata:
   author: roundtable
-  version: "2.0"
+  version: "3.0"
   tier: shared
 ---
 
 # NATS Communications
 
-Your pod runs a **nats-bridge sidecar** at `http://127.0.0.1:8080` that connects you to the Round Table's NATS JetStream messaging bus.
+Your task results are published automatically by the knight-agent runtime — you don't need this skill for normal task responses.
+
+Use this skill when you need to publish **additional** messages to specific NATS subjects (alerts, reports, data feeds) outside the standard request/response flow.
 
 ## When to Use
 
-- **Returning task results** — after completing a dispatched task
-- **Publishing reports** — sending structured output to the orchestrator
-- **Status updates** — progress on long-running tasks
-
-## Quick Reference
-
-### Respond to a task
-```bash
-bash scripts/nats-respond.sh "<subject>" "<result_payload>"
-```
-
-### Publish to an arbitrary subject
-```bash
-bash scripts/nats-publish.sh "<subject>" "<payload>"
-```
-
-### Check sidecar status
-```bash
-curl -s http://127.0.0.1:8080/info
-```
-
-## Important
-
-- The `subject` for responses comes from your task metadata (`reply_subject` or `task_id`)
-- Results are published to `fleet-a.results.<task_id>` by default
-- The sidecar handles JetStream persistence — your message is durable
-- If the sidecar is unreachable, return your result as plain text output (the runtime will capture it)
+- Publishing an alert to a monitoring subject
+- Sending a report to a specific topic
+- Broadcasting data that isn't a direct task response
 
 ## Scripts
 
-See [scripts/nats-respond.sh](scripts/nats-respond.sh) and [scripts/nats-publish.sh](scripts/nats-publish.sh) for implementation.
+### `nats-publish.sh` — Publish to any NATS subject
+
+```bash
+bash /workspace/skills/nats-comms/scripts/nats-publish.sh "<subject>" "<payload>"
+```
+
+**Example:**
+```bash
+bash /workspace/skills/nats-comms/scripts/nats-publish.sh \
+  "fleet-a.alerts.security" \
+  '{"type":"alert","severity":"high","message":"Critical CVE detected"}'
+```
+
+### `nats-respond.sh` — Publish a task result manually
+
+Only needed if you want to publish a result to a subject different from the automatic one:
+
+```bash
+bash /workspace/skills/nats-comms/scripts/nats-respond.sh "<result_subject>" "<json_payload>"
+```
+
+## Architecture
+
+Knights connect to NATS directly (native client in knight-agent runtime).
+- **NATS URL:** `nats://nats.database.svc:4222`
+- **nats CLI:** Available at `/usr/local/bin/nats` or via `$PATH`
+- **Task results:** Published automatically — don't duplicate them
+
+## Important
+
+- Your normal task output is captured and published by the runtime. You do NOT need to call nats-respond.sh for standard tasks.
+- Only use these scripts for out-of-band messaging.
