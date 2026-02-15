@@ -50,6 +50,21 @@
 
 ---
 
+## 🐉 Nerd News & Culture
+
+{{#each nerd_news}}
+**{{this.icon}} {{this.title}}**
+{{this.analysis}}
+{{#if this.link}}[Read more](<{{this.link}}>){{/if}}
+
+{{/each}}
+
+{{#if nerd_news_commentary}}
+> **Kay's Take:** {{nerd_news_commentary}}
+{{/if}}
+
+---
+
 ## Research Completed
 
 {{#if research_tasks}}

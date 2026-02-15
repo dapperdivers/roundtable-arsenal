@@ -28,6 +28,17 @@ DEFAULT_FEEDS = {
     "science": [
         "https://rss.sciencedaily.com/all.xml",
     ],
+    "gaming": [
+        "https://www.gamespot.com/feeds/mashup/",
+        "https://kotaku.com/rss",
+        "https://www.eurogamer.net/feed",
+    ],
+    "entertainment": [
+        "https://www.ign.com/articles/feed",
+        "https://gizmodo.com/feed",
+        "https://www.polygon.com/rss/index.xml",
+        "https://io9.gizmodo.com/rss",
+    ],
 }
 
 

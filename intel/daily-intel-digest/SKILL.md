@@ -26,11 +26,12 @@ Produce a daily intelligence product that Tim can scan in 90 seconds and know wh
 |---|---------|-------------------|----------------|
 | 1 | Executive Summary | Always high | Synthesis of all sections |
 | 2 | Space Weather | High if Kp≥5 or active alerts; else medium | `intel/solar-weather` |
-| 3 | Technology & Security Intel | Varies per story | `intel/news-aggregator` |
-| 4 | Research Completed | Medium | Kay's memory files |
-| 5 | Threads Worth Pulling | Medium-high | Pattern recognition across sources |
-| 6 | Knight Activity | Low-medium | Inter-knight comms, NATS logs |
-| 7 | Local Weather | Low | `intel/weather-fetch` |
+| 3 | Technology & Security Intel | Varies per story | `intel/news-aggregator` + web search |
+| 4 | Nerd News & Culture | Medium | Web search + RSS |
+| 5 | Research Completed | Medium | Kay's memory files |
+| 6 | Threads Worth Pulling | Medium-high | Pattern recognition across sources |
+| 7 | Knight Activity | Low-medium | Inter-knight comms, NATS logs |
+| 8 | Local Weather | Low | `intel/weather-fetch` |
 
 ## Data Collection Procedure
 
@@ -63,7 +64,30 @@ Filter and rank by relevance to Round Table domains (homelab, security, AI, spac
 - Tag confidence per story.
 - Wrap multiple links in `<>` for Discord embed suppression.
 
-### 3. Research Log
+### 3. Nerd News & Culture
+Search for the latest in gaming, movies, TV, and cool tech. Derek is a nerd — this section should feel like the fun part of the briefing.
+
+```bash
+# Use web search to find trending nerd culture news
+bash /workspace/skills/shared/web-search/scripts/search.sh "gaming news today 2026"
+bash /workspace/skills/shared/web-search/scripts/search.sh "new movie trailer announcements 2026"
+bash /workspace/skills/shared/web-search/scripts/search.sh "cool tech gadgets edge of innovation 2026"
+bash /workspace/skills/shared/web-search/scripts/search.sh "TV show renewals cancellations 2026"
+```
+
+**Topics to cover (pick 3-5 best):**
+- 🎮 **Gaming** — New releases, trailers, major announcements, indie gems, Game Pass/PS+ additions
+- 🎬 **Movies & TV** — Trailers, renewals/cancellations, streaming releases, franchise news (Star Wars, Marvel, LOTR, GOT/HOTD, Dune)
+- 🐉 **Franchise watch** — House of the Dragon, Rings of Power, Dune, Blade Runner, Foundation, Fallout — anything in Derek's wheelhouse
+- 🤖 **Cool tech** — Robotics, space exploration, quantum computing, AI breakthroughs, retro computing, maker projects
+- 🔬 **Science** — Space discoveries, physics breakthroughs, cool biology, anything that makes you go "whoa"
+- 🕹️ **Retro/nostalgia** — Emulation news, retro hardware, classic game remasters
+
+**Tone:** Enthusiastic but curated. This is the section where Kay gets to be a nerd. Have opinions — "this looks incredible" or "hard pass, here's why." Don't just list headlines.
+
+**Derek's known interests:** Monty Python, GoT/HotD, sci-fi, self-hosting, homelab, woodworking, diving, space
+
+### 4. Research Log
 Check Kay's memory files for completed research:
 ```bash
 cat /home/node/molty/memory/$(date -d yesterday +%Y-%m-%d).md 2>/dev/null
