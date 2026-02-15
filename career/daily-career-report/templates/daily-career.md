@@ -1,0 +1,201 @@
+# ⚔️ The Champion's Morning Intelligence Report
+
+> **Sir Lancelot's Daily Career Briefing**
+> **{{date}}** — Campaign Day **{{campaign_day}}** — **{{campaign_mode}}**
+
+---
+
+**STRATEGIC SITUATION:** {{strategic_situation}}
+
+---
+
+## 🎯 Active Campaign Status
+
+| Company | Role | Submitted | Days Ago | Stage | Prep Status | Next Action |
+|---------|------|-----------|----------|-------|-------------|-------------|
+{{#each campaigns}}
+| {{company}} | {{role}} | {{submitted}} | {{days_ago}} | {{stage}} | {{prep_status}} | {{next_action}} |
+{{/each}}
+
+**Pipeline Summary:**
+- 📬 Applications in flight: **{{active_count}}**
+- 📞 In interview stage: **{{interview_count}}**
+- 📊 30-day response rate: **{{response_rate}}%**
+- ⚠️ Stale (14+ days, no response): **{{stale_count}}**
+
+**Outstanding Follow-ups:**
+{{#each follow_ups}}
+- [ ] {{this}}
+{{/each}}
+
+---
+
+## 🔍 Today's Reconnaissance Priorities
+
+{{#if urgent_interviews}}
+### 🚨 URGENT — Interviews Within 72 Hours
+{{#each urgent_interviews}}
+- **{{company}} — {{role}}** ({{interview_date}})
+  - Prep Status: **{{prep_status}}**
+  - {{#if gaps}}Gaps: {{gaps}}{{/if}}
+  - Action: {{action}}
+{{/each}}
+{{/if}}
+
+### Research Gaps
+{{#each research_gaps}}
+- [ ] {{company}} — {{what_to_research}}
+{{/each}}
+
+### Expiring Opportunities
+{{#each expiring}}
+- 🕐 **{{role}}** at {{company}} — closes {{closing_date}}
+{{/each}}
+
+### Network Actions
+{{#each network_actions}}
+- [ ] {{this}}
+{{/each}}
+
+---
+
+## 📊 Market Intelligence
+
+### New Postings (Last 24h)
+{{#each new_postings}}
+- **{{role}}** at {{company}} — {{location}} — [Link]({{url}})
+{{/each}}
+{{#unless new_postings}}
+- No new postings matching target criteria today
+{{/unless}}
+
+### Hiring Signals
+{{#each hiring_signals}}
+- {{this}}
+{{/each}}
+
+### Industry Developments
+{{#each industry_news}}
+- {{this}}
+{{/each}}
+
+---
+
+## 💼 LinkedIn Battle Readiness
+
+| Metric | Value | Trend |
+|--------|-------|-------|
+| Profile Views (7d) | {{profile_views}} | {{profile_trend}} |
+| Post Impressions | {{post_impressions}} | {{post_trend}} |
+| New Connections | {{new_connections}} | — |
+| SSI Score | {{ssi_score}} | {{ssi_trend}} |
+
+**Pending Actions:**
+{{#each linkedin_actions}}
+- [ ] {{this}}
+{{/each}}
+
+**Content Opportunity:** {{content_opportunity}}
+
+---
+
+## 🎓 Skill Sharpening
+
+### Interview Performance
+{{#if recent_interviews}}
+{{#each recent_interviews}}
+- **{{company}}** ({{date}}): {{assessment}}
+  - Strength: {{strength}}
+  - Improve: {{improve}}
+{{/each}}
+{{else}}
+- No recent interviews to review
+{{/if}}
+
+### Answer Arsenal (STAR Stories)
+| Theme | Status | Story |
+|-------|--------|-------|
+| Leadership / Influence | {{star_leadership}} | {{star_leadership_story}} |
+| Conflict Resolution | {{star_conflict}} | {{star_conflict_story}} |
+| Failure / Learning | {{star_failure}} | {{star_failure_story}} |
+| Technical Challenge | {{star_technical}} | {{star_technical_story}} |
+| Security Incident | {{star_security}} | {{star_security_story}} |
+| Under Pressure | {{star_pressure}} | {{star_pressure_story}} |
+| Cross-team Collaboration | {{star_crossteam}} | {{star_crossteam_story}} |
+| Mentorship | {{star_mentorship}} | {{star_mentorship_story}} |
+| Process Improvement | {{star_process}} | {{star_process_story}} |
+| Customer Impact | {{star_customer}} | {{star_customer_story}} |
+
+**Coverage:** {{star_coverage}}/10 themes — {{star_assessment}}
+
+### Skill Gaps vs Market
+{{#each skill_gaps}}
+- ⚡ **{{skill}}** — appearing in {{frequency}}% of target postings
+{{/each}}
+
+---
+
+## 🏆 Wins & Momentum
+
+### Yesterday's Victories
+{{#each yesterdays_wins}}
+- ✅ {{this}}
+{{/each}}
+{{#unless yesterdays_wins}}
+- Rest day — the champion recuperates to fight harder tomorrow
+{{/unless}}
+
+### Streak Tracker
+```
+🔥 Active Streak:  {{active_streak}} days
+🏅 Record Streak:  {{record_streak}} days
+📅 Campaign Day:   {{campaign_day}}
+```
+{{#if streak_broken}}
+> ⚔️ **Rally!** The streak broke, but the champion doesn't stay down. Today we rebuild.
+{{/if}}
+
+### Campaign Lifetime Stats
+| Metric | Count |
+|--------|-------|
+| Total Applications | {{total_applications}} |
+| Phone Screens | {{total_screens}} |
+| Interviews | {{total_interviews}} |
+| Offers | {{total_offers}} |
+| Connections Made | {{total_connections}} |
+
+---
+
+## ⚔️ Today's Battle Plan
+
+### Top 3 Actions
+
+1. **{{action_1}}**
+2. **{{action_2}}**
+3. **{{action_3}}**
+
+### Time Blocks
+
+| Block | Time | Focus |
+|-------|------|-------|
+| ☀️ Morning | 9:00 — 12:00 | {{morning_focus}} |
+| 🌤️ Afternoon | 1:00 — 4:00 | {{afternoon_focus}} |
+| 🌙 Evening | 7:00 — 9:00 | {{evening_focus}} |
+
+### Victory Condition
+
+> **{{victory_condition}}**
+
+---
+
+## Champion's Directive
+
+> **Your mission today:** {{primary_mission}}
+>
+> **Victory condition:** {{victory_condition}}
+>
+> *Preparation is everything. Let's make today count.* ⚔️
+
+---
+
+*Report generated by Sir Lancelot at {{timestamp}} | Campaign Mode: {{campaign_mode}}*
