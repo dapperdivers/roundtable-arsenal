@@ -5,7 +5,7 @@ description: Ask other Round Table knights for help during a task. Use when you 
 
 # Knight-to-Knight Communication
 
-Ask another knight for help directly via NATS. Use this when your task requires expertise from another domain.
+Ask another knight for help using the `nats_request` tool. Use this when your task requires expertise from another domain.
 
 ## When to Use
 
@@ -18,40 +18,39 @@ Ask another knight for help directly via NATS. Use this when your task requires 
 
 ## Usage
 
-```bash
-# Ask a knight and wait for their response (default 60s timeout)
-RESULT=$(bash /workspace/skills/shared/knight-comms/scripts/ask-knight.sh <domain> "<question>" [timeout_seconds])
-echo "$RESULT"
+Use the `nats_request` tool directly — it's a native tool in your tool loop:
+
 ```
+nats_request(
+  knight: "percival",
+  domain: "finance",
+  task: "Search Paperless for all W-2 documents from 2024",
+  timeout_ms: 600000   // optional, default 10 min
+)
+```
+
+The tool blocks until the target knight responds, then returns their full response as text. You can continue working with that data immediately.
 
 ### Examples
 
-```bash
-# Kay: research a topic
-RESULT=$(bash /workspace/skills/shared/knight-comms/scripts/ask-knight.sh research "What are the latest Alabama tax law changes for 2024 filers?" 90)
-
-# Galahad: security context
-RESULT=$(bash /workspace/skills/shared/knight-comms/scripts/ask-knight.sh security "Any known security incidents involving Clipboard Health?" 60)
-
-# Percival: financial data
-RESULT=$(bash /workspace/skills/shared/knight-comms/scripts/ask-knight.sh finance "Search Paperless for all W-2 documents from 2024" 60)
-
-# Tristan: infrastructure status
-RESULT=$(bash /workspace/skills/shared/knight-comms/scripts/ask-knight.sh infra "What's the current health of the security namespace?" 60)
 ```
+// Kay: research a topic
+nats_request(knight: "kay", domain: "research", task: "What are the latest Alabama tax law changes for 2024 filers?")
 
-## How It Works
+// Galahad: security context
+nats_request(knight: "galahad", domain: "security", task: "Any known security incidents involving Clipboard Health?")
 
-1. Your script publishes a task to `fleet-a.tasks.<domain>.<taskId>`
-2. The target knight picks it up via its NATS consumer
-3. The target knight processes and publishes the result
-4. Your script retrieves the result from `fleet_a_results` stream
-5. The result is returned as the script's stdout
+// Percival: financial data
+nats_request(knight: "percival", domain: "finance", task: "Search Paperless for all W-2 documents from 2024")
+
+// Tristan: infrastructure status
+nats_request(knight: "tristan", domain: "infra", task: "What's the current health of the security namespace?")
+```
 
 ## Constraints
 
 - **Max depth: 1** — You can ask another knight, but they should NOT chain further requests. Include "Do not delegate to other knights" in your sub-task.
-- **Timeout** — Default 60 seconds. Complex research may need 90-120s.
+- **Timeout** — Default 10 minutes. Most tasks complete in 1-5 minutes.
 - **Cost awareness** — Each cross-knight request costs tokens. Only ask when the expertise genuinely helps your task.
 - **Be specific** — Give the other knight a clear, focused question. Don't dump your entire task on them.
 
@@ -65,3 +64,4 @@ RESULT=$(bash /workspace/skills/shared/knight-comms/scripts/ask-knight.sh infra 
 | infra | 🏗️ Tristan | `fleet-a.tasks.infra.>` | Cluster health, Flux, deployments |
 | home | 🏠 Bedivere | `fleet-a.tasks.home.>` | Home Assistant, family, calendar |
 | research | 📡 Kay | `fleet-a.tasks.research.>` | Deep research, news, solar weather |
+| vault | 🥥 Patsy | `fleet-a.tasks.vault.>` | Vault curation, metadata, cleanup |
