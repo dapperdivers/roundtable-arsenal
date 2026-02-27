@@ -65,4 +65,6 @@ nats_request(knight: "tristan", domain: "infra", task: "What's the current healt
 | home | 🏠 Bedivere | `fleet-a.tasks.home.>` | Home Assistant, family, calendar |
 | research | 📡 Kay | `fleet-a.tasks.research.>` | Deep research, news, solar weather |
 | vault | 🥥 Patsy | `fleet-a.tasks.vault.>` | Vault curation, metadata, cleanup |
-| framework | ⚒️ Gawain | `fleet-a.tasks.framework.>` | Pi-knight runtime improvement, benchmarks, optimization |
+| project | ⚒️ Gawain | `fleet-a.tasks.project.>` | Orchestration, GitHub PM, chain dispatch |
+| pentest | 🗡️ Agravain | `fleet-a.tasks.pentest.>` | Offensive security, nmap, recon |
+| wellness | 🌿 Gareth | `fleet-a.tasks.wellness.>` | Baby/family wellness, health |
