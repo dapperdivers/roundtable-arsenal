@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<opml version="2.0">
+  <head>
+    <title>Security &amp; Tech RSS Feeds</title>
+  </head>
+  <body>
+    <outline text="Security" title="Security">
+      <outline type="rss" text="Krebs on Security" title="Krebs on Security"
+        xmlUrl="https://krebsonsecurity.com/feed/" htmlUrl="https://krebsonsecurity.com"/>
+      <outline type="rss" text="The Hacker News" title="The Hacker News"
+        xmlUrl="https://feeds.feedburner.com/TheHackersNews" htmlUrl="https://thehackernews.com"/>
+      <outline type="rss" text="SANS ISC" title="SANS ISC"
+        xmlUrl="https://isc.sans.edu/rssfeed.xml" htmlUrl="https://isc.sans.edu"/>
+      <outline type="rss" text="Schneier on Security" title="Schneier on Security"
+        xmlUrl="https://www.schneier.com/feed/" htmlUrl="https://www.schneier.com"/>
+    </outline>
+    <outline text="Technology" title="Technology">
+      <outline type="rss" text="Ars Technica" title="Ars Technica"
+        xmlUrl="https://feeds.arstechnica.com/arstechnica/index" htmlUrl="https://arstechnica.com"/>
+    </outline>
+  </body>
+</opml>
