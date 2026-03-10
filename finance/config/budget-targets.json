@@ -1,19 +1,13 @@
 {
   "monthly_targets": {
-    "housing": {"budget": null, "includes": ["mortgage", "heloc", "insurance", "taxes"]},
-    "utilities": {"budget": null, "includes": ["electric", "water", "internet", "phone"]},
+    "housing": {"budget": null},
+    "utilities": {"budget": null},
     "groceries": {"budget": null},
-    "transportation": {"budget": null, "includes": ["gas", "maintenance", "insurance"]},
-    "debt_payments": {"budget": null, "note": "avalanche strategy — minimum + extra to highest rate"},
-    "savings": {"budget": null, "includes": ["emergency", "baby fund"]},
-    "baby_prep": {"budget": null, "note": "nursery, gear, medical"},
+    "transportation": {"budget": null},
+    "debt_payments": {"budget": null},
+    "savings": {"budget": null},
     "discretionary": {"budget": null}
   },
   "debt_strategy": "avalanche",
-  "avalanche_order": ["Chase CC", "WF1 (promo expires 2026-04-03)", "remaining cards"],
-  "savings_goals": {
-    "emergency_fund": {"target": null, "current": null},
-    "baby_fund": {"target": null, "current": null}
-  },
-  "notes": "Template — Derek needs to fill in actual amounts. WF1 promo expires April 3, 2026."
+  "notes": "TEMPLATE ONLY — populate from vault, never commit real amounts to this repo."
 }
