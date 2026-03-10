@@ -1,0 +1,28 @@
+{
+  "tax_year": 2024,
+  "filing_status": "single",
+  "note": "2024 taxes — Derek was single. 2025 will be married filing jointly.",
+  "expected_documents": {
+    "income": [
+      {"type": "W-2", "source": "Mastery", "received": false},
+      {"type": "1099-NEC", "source": "Fourleaf LLC", "amount_approx": 500, "received": false}
+    ],
+    "deductions": [
+      {"type": "1098", "source": "Mortgage interest", "received": false},
+      {"type": "1098-E", "source": "Student loan interest", "received": false}
+    ],
+    "investments": [
+      {"type": "1099-B", "source": "Fidelity", "received": false},
+      {"type": "1099-B", "source": "Schwab", "received": false},
+      {"type": "1099-MISC", "source": "Crypto (if applicable)", "received": false}
+    ],
+    "bank_statements": [
+      "Chase", "Wells Fargo", "USAA", "Bluevine", "Fidelity", "Schwab"
+    ]
+  },
+  "accounts_needing_csv_export": [
+    "Chase CC", "Wells Fargo CC", "Discover CC", "AmEx CC", "USAA Checking", "Bluevine"
+  ],
+  "deadline": "2026-04-15",
+  "notes": "LLC income minimal (~$500/yr). PSLF student loans. Need CSVs from Derek."
+}

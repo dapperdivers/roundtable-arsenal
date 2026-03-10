@@ -1,0 +1,18 @@
+{
+  "recurring_bills": [
+    {"name": "Mortgage/HELOC", "amount": null, "due_day": 1, "account": "HELOC", "category": "housing"},
+    {"name": "Student Loans", "amount": 313, "due_day": 15, "account": "federal", "category": "debt", "note": "PSLF eligible"},
+    {"name": "Car Insurance", "amount": null, "due_day": null, "account": "USAA", "category": "insurance"},
+    {"name": "Internet", "amount": null, "due_day": null, "category": "utilities"},
+    {"name": "Phone", "amount": null, "due_day": null, "category": "utilities"},
+    {"name": "Electricity", "amount": null, "due_day": null, "category": "utilities"},
+    {"name": "Water/Sewer", "amount": null, "due_day": null, "category": "utilities"}
+  ],
+  "credit_cards": [
+    {"name": "Chase", "balance_approx": 2000, "rate": null, "priority": 1, "status": "avalanche_next"},
+    {"name": "Wells Fargo 1", "balance_approx": 12600, "rate": null, "promo_expires": "2026-04-03", "priority": 2},
+    {"name": "AmEx", "balance_approx": 0, "status": "paid_off", "paid_date": "2026-03-05"},
+    {"name": "Discover", "balance_approx": 0, "status": "paid_off", "paid_date": "2026-03"}
+  ],
+  "notes": "Amounts marked null need to be filled in by Derek. This is a starter template from the self-improvement cycle."
+}
