@@ -9,12 +9,9 @@ Ask another knight for help using the `nats_request` tool. Use this when your ta
 
 ## When to Use
 
-- You need **research** on a topic → ask **Kay** (research)
-- You need **security context** (CVEs, threats) → ask **Galahad** (security)
-- You need **financial data** (documents, budgets) → ask **Percival** (finance)
-- You need **infrastructure status** (pods, deployments) → ask **Tristan** (infra)
-- You need **household info** (calendar, smart home) → ask **Bedivere** (home)
-- You need **career/company intel** → ask **Lancelot** (career)
+- You need help from a knight with different expertise
+- Your task requires data or analysis you can't do yourself
+- You want to delegate a sub-task to a specialist
 
 ## Usage
 
@@ -31,40 +28,47 @@ nats_request(
 
 The tool blocks until the target knight responds, then returns their full response as text. You can continue working with that data immediately.
 
-### Examples
+## ⚠️ CRITICAL: Know Your Table
 
-```
-// Kay: research a topic
-nats_request(knight: "kay", domain: "research", task: "What are the latest Alabama tax law changes for 2024 filers?")
+You belong to a specific RoundTable. Check your NATS subject prefix to know which table you're on:
 
-// Galahad: security context
-nats_request(knight: "galahad", domain: "security", task: "Any known security incidents involving Clipboard Health?")
+- **`fleet-a`** prefix → you're on the **personal** table
+- **`rt-dev`** prefix → you're on the **roundtable-dev** table
 
-// Percival: financial data
-nats_request(knight: "percival", domain: "finance", task: "Search Paperless for all W-2 documents from 2024")
+**Only request knights within your own table.** Cross-table requests will timeout because the result subscription won't match.
 
-// Tristan: infrastructure status
-nats_request(knight: "tristan", domain: "infra", task: "What's the current health of the security namespace?")
-```
+If you're on `rt-dev` and need help from a personal-table knight (or vice versa), say so in your task output — let the orchestrator (Tim or a chain) handle cross-table coordination.
+
+## Knight Directory — Personal Table (`fleet-a`)
+
+| Domain | Knight | Specialty |
+|--------|--------|-----------|
+| security | 🛡️ Galahad | Threat intel, CVEs, OpenCTI |
+| finance | 📋 Percival | Tax prep, Paperless, budgets |
+| career | ⚔️ Lancelot | Interviews, LinkedIn, company research |
+| infra | 🏗️ Tristan | Cluster health, Flux, deployments |
+| home | 🏠 Bedivere | Home Assistant, family, calendar |
+| research | 📡 Kay | Deep research, news, solar weather |
+| vault | 🥥 Patsy | Vault curation, metadata, cleanup |
+| project | ⚒️ Gawain | Orchestration, GitHub PM, chain dispatch |
+| pentest | 🗡️ Agravain | Offensive security, nmap, recon |
+| wellness | 🌿 Gareth | Baby/family wellness, health |
+| coding | ⚙️ coder-1/coder-2 | General-purpose coding |
+
+## Knight Directory — Round Table Dev Team (`rt-dev`)
+
+| Domain | Knight | Specialty |
+|--------|--------|-----------|
+| lead | 🏰 rt-lead | Architecture, planning, cross-repo coordination |
+| operator | ⚙️ rt-operator | roundtable repo (Go operator, CRDs) |
+| runtime | 🔧 rt-runtime | pi-knight repo (TS runtime SDK) |
+| skills | 📜 rt-arsenal | roundtable-arsenal repo (skill authoring) |
+| frontend | 🖥️ rt-ui | roundtable-ui repo (React dashboard) |
 
 ## Constraints
 
 - **Max depth: 1** — You can ask another knight, but they should NOT chain further requests. Include "Do not delegate to other knights" in your sub-task.
+- **Stay in your table** — Only request knights that share your NATS prefix.
 - **Timeout** — Default 10 minutes. Most tasks complete in 1-5 minutes.
 - **Cost awareness** — Each cross-knight request costs tokens. Only ask when the expertise genuinely helps your task.
 - **Be specific** — Give the other knight a clear, focused question. Don't dump your entire task on them.
-
-## Knight Directory
-
-| Domain | Knight | Topics | Specialty |
-|--------|--------|--------|-----------|
-| security | 🛡️ Galahad | `fleet-a.tasks.security.>` | Threat intel, CVEs, OpenCTI |
-| finance | 📋 Percival | `fleet-a.tasks.finance.>` | Tax prep, Paperless, budgets |
-| career | ⚔️ Lancelot | `fleet-a.tasks.career.>` | Interviews, LinkedIn, company research |
-| infra | 🏗️ Tristan | `fleet-a.tasks.infra.>` | Cluster health, Flux, deployments |
-| home | 🏠 Bedivere | `fleet-a.tasks.home.>` | Home Assistant, family, calendar |
-| research | 📡 Kay | `fleet-a.tasks.research.>` | Deep research, news, solar weather |
-| vault | 🥥 Patsy | `fleet-a.tasks.vault.>` | Vault curation, metadata, cleanup |
-| project | ⚒️ Gawain | `fleet-a.tasks.project.>` | Orchestration, GitHub PM, chain dispatch |
-| pentest | 🗡️ Agravain | `fleet-a.tasks.pentest.>` | Offensive security, nmap, recon |
-| wellness | 🌿 Gareth | `fleet-a.tasks.wellness.>` | Baby/family wellness, health |
