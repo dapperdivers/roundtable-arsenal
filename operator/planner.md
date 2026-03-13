@@ -86,14 +86,15 @@ You MUST output valid JSON matching this schema:
 9. **Chain timeout must exceed the sum of sequential step timeouts**
 10. **Output ONLY valid JSON** — no markdown wrappers, no explanations outside the JSON
 
-## Available Context
+## Capability Bootstrap
 
-The operator will inject these into your prompt:
-- **Available arsenal skills**: List of skill files you can reference
-- **Available nix packages**: Common packages knights can install
-- **RoundTable templates**: Pre-built knight configurations
-- **Mission objective**: What the user wants to accomplish
-- **Constraints**: Budget, time, knight limits
+Knights bootstrap their own environments. You don't pick from a menu — you **design from scratch**:
+
+- **Nix packages**: Any package in nixpkgs. Knights run `nix profile install nixpkgs#<pkg>` at startup. Need nmap? Say nmap. Need python3 with requests? Say `python3` and `python3Packages.requests`.
+- **Skills**: Generate inline markdown. Each skill is a system prompt that guides the knight's behavior. Write it fresh for the mission — be specific about methodology, output format, and constraints.
+- **Arsenal skills**: You can also reference existing skills from the shared arsenal by path (e.g., `coding/coding-agent.md`). Use these when they fit; generate new ones when they don't.
+
+The infrastructure handles installation and mounting. You just reason about **what's needed**.
 
 ## Model Selection Guide
 
