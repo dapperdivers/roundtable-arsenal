@@ -14,7 +14,15 @@ Fetches and filters news from configured RSS/Atom sources with relevance scoring
 
 ## Scripts
 
-### Fetch news
+### Fetch news (bash — no dependencies)
+```bash
+bash scripts/fetch-news.sh --hours 24 --category all --limit 15
+```
+Categories: `tech`, `security`, `gaming`, `science`, `all`
+
+Falls back to SearXNG if RSS feeds fail.
+
+### Fetch news (python — requires feedparser)
 ```bash
 python3 scripts/fetch-news.py [--hours 24] [--category tech|security|all]
 ```

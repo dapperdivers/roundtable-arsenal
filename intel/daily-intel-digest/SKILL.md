@@ -52,8 +52,10 @@ Extract: Kp index, solar wind speed, Bz, active alerts, aurora forecast, flare a
 
 ### 2. News Aggregation
 ```bash
-cd /home/node/molty/repos/roundtable-arsenal/intel/news-aggregator
-python3 scripts/fetch-news.py --hours 24 --category all
+cd /workspace/skills/intel/news-aggregator
+bash scripts/fetch-news.sh --hours 24 --category all --limit 15
+# OR if python3+feedparser available:
+# python3 scripts/fetch-news.py --hours 24 --category all
 ```
 Filter and rank by relevance to Round Table domains (homelab, security, AI, space, self-hosting).
 
