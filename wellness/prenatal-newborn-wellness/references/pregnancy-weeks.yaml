@@ -1,0 +1,484 @@
+# Pregnancy Week-by-Week Reference
+# Complete development milestones, symptoms, and nutrition guidance
+# Based on ACOG and evidence-based medical sources
+
+# THIRD TRIMESTER (Weeks 28-42) - Most relevant for current status
+
+week_33:
+  trimester: 3
+  development:
+    size:
+      weight_lbs: 4.2
+      weight_kg: 1.9
+      length_inches: 17.2
+      length_cm: 43.7
+      comparison: "pineapple"
+    major_milestones:
+      - "Brain neural development at peak—billions of connections forming"
+      - "Lungs 85-90% mature, surfactant production well-established"
+      - "Immune system receiving maternal antibodies through placenta"
+      - "All five senses functional"
+    organs:
+      brain: "Explosive neural growth, synaptic connections forming rapidly"
+      lungs: "85-90% mature, practicing breathing movements"
+      immune: "Building passive immunity from maternal antibodies"
+      digestive: "Fully functional, processing amniotic fluid"
+      kidneys: "Processing ~1 pint amniotic fluid daily"
+    physical:
+      skin: "Becoming less wrinkled as fat layer thickens"
+      bones: "Hardening throughout body, skull remains flexible"
+      fat: "Rapid subcutaneous fat accumulation"
+      hair: "Lanugo shedding, scalp hair growing"
+    sensory:
+      vision: "Detects light, pupils react, can track movement"
+      hearing: "Recognizes mother's voice, familiar sounds"
+      taste: "Tastes amniotic fluid flavored by mother's diet"
+      touch: "Responds to pressure on belly"
+    viability:
+      survival_rate: "95-98%"
+      nicu_likelihood: "high"
+      nicu_duration: "2-4 weeks typical"
+      prognosis: "excellent long-term outcomes"
+  
+  symptoms:
+    common:
+      - "Braxton Hicks contractions (irregular practice contractions)"
+      - "Shortness of breath (uterus compressing diaphragm)"
+      - "Frequent urination (baby on bladder)"
+      - "Pelvic pressure (baby moving lower)"
+      - "Fatigue (peak third trimester exhaustion)"
+      - "Back pain (weight, posture strain)"
+      - "Swelling in feet, ankles, hands"
+      - "Heartburn/acid reflux"
+      - "Constipation"
+      - "Leg cramps (especially at night)"
+      - "Insomnia (discomfort, bathroom trips)"
+    
+    concerning:
+      call_ob:
+        - "Regular contractions: 4+ per hour, rhythmic pattern"
+        - "Vaginal bleeding beyond minimal spotting"
+        - "Fluid leakage (possible water breaking)"
+        - "Decreased fetal movement: <10 movements in 2 hours"
+        - "Severe headache that won't respond to Tylenol"
+        - "Vision changes (spots, blurriness, flashing lights)"
+        - "Upper right abdominal pain (under ribs)"
+        - "Sudden severe swelling (face, hands)"
+        - "Fever over 100.4°F"
+        - "Severe persistent vomiting"
+      
+      seek_emergency:
+        - "Severe bleeding"
+        - "Severe abdominal pain"
+        - "Signs of preeclampsia (headache + vision + swelling)"
+        - "Chest pain"
+        - "Difficulty breathing"
+        - "Seizures"
+  
+  nutrition:
+    daily_targets:
+      protein_grams: "75-100"
+      carbs_grams: "175-210"
+      fiber_grams: "25-30"
+      hydration_oz: "80-100"
+      dha_mg: "200-300"
+      iron_mg: "27-30"
+      calcium_mg: "1000"
+    
+    focus_nutrients:
+      - nutrient: "DHA (Omega-3)"
+        why: "Peak brain development—neural connections forming"
+        sources: ["Salmon 2-3x/week", "DHA supplement 200-300mg"]
+      
+      - nutrient: "Protein"
+        why: "Baby gaining 0.5 lbs/week, maternal energy"
+        sources: ["Chicken", "salmon", "eggs", "Greek yogurt", "beans"]
+      
+      - nutrient: "Iron"
+        why: "Blood volume max, baby's iron stores accumulating"
+        sources: ["Beef", "fortified cereal", "lentils", "pair with vitamin C"]
+      
+      - nutrient: "Calcium"
+        why: "Bones hardening, prevents maternal bone loss"
+        sources: ["Dairy", "fortified plant milk", "leafy greens"]
+  
+  appointments:
+    frequency: "Every 2 weeks (until Week 36)"
+    typical_tests:
+      - "Fundal height measurement (~33 cm)"
+      - "Fetal heart rate (120-160 bpm)"
+      - "Blood pressure (<140/90)"
+      - "Urine test (protein, glucose)"
+      - "Weight check"
+      - "Baby position assessment"
+    
+    discuss:
+      - "Birth plan preferences"
+      - "Hospital pre-registration"
+      - "Labor signs to watch for"
+      - "Upcoming Group B strep test (Week 36-37)"
+  
+  prep_tasks:
+    critical:
+      - "Will/trust with guardian designation"
+      - "Hospital pre-registration"
+      - "Pediatrician selection"
+    
+    recommended:
+      - "Hospital bag checklist creation"
+      - "Car seat research"
+      - "Nursery preparation"
+      - "Freezer meal prep planning"
+
+week_34:
+  trimester: 3
+  development:
+    size:
+      weight_lbs: 4.75
+      weight_kg: 2.15
+      length_inches: 17.7
+      length_cm: 45
+      comparison: "cantaloupe"
+    
+    major_milestones:
+      - "LUNG MATURITY: Surfactant production 95%+ complete"
+      - "Central nervous system maturing rapidly"
+      - "Sleep-wake cycles establishing predictable patterns"
+      - "Fat accumulation accelerating (~8% body fat)"
+    
+    organs:
+      lungs: "95%+ mature—babies born at 34 weeks typically need minimal respiratory support"
+      brain: "Continued rapid neural growth, REM sleep developing"
+      immune: "Receiving maternal antibodies (passive immunity building)"
+      digestive: "Processing amniotic fluid, meconium accumulating"
+    
+    physical:
+      skin: "Pink, smooth, less wrinkled from fat layer"
+      bones: "Hardening throughout, skull flexible for birth"
+      nails: "Fingernails at/beyond fingertips, toenails fully formed"
+      hair: "Lanugo mostly shed, scalp hair 1-2 cm"
+      fat: "Depositing in face, shoulders, arms, legs"
+    
+    positioning:
+      typical: "Most babies settling into head-down (vertex) position"
+      check: "OB will assess position at appointment"
+      if_breech: "Still time to turn naturally or ECV at 36-37 weeks"
+    
+    viability:
+      survival_rate: "98-99%"
+      nicu_likelihood: "likely but brief"
+      nicu_duration: "1-3 weeks (primarily feeding support)"
+      prognosis: "excellent—minimal complications"
+      key_note: "This is a major reassurance milestone—lungs essentially ready"
+  
+  symptoms:
+    common:
+      - "Braxton Hicks increasing in frequency"
+      - "Shortness of breath at maximum (uterus at peak height)"
+      - "Frequent urination (every 30-60 min during day)"
+      - "Pelvic pressure and 'lightning crotch' (nerve compression)"
+      - "Peak third trimester fatigue"
+      - "Back pain often severe"
+      - "Significant swelling (especially end of day)"
+      - "Heartburn often constant"
+      - "Constipation often worst at this stage"
+      - "Insomnia"
+    
+    concerning: # Same as Week 33
+      call_ob:
+        - "Regular contractions: 4+ per hour"
+        - "Vaginal bleeding or fluid leakage"
+        - "Decreased fetal movement"
+        - "Severe headache with vision changes"
+        - "Sudden severe swelling with headache"
+        - "Fever, severe vomiting, burning urination"
+  
+  nutrition: # Same targets as Week 33
+    daily_targets:
+      protein_grams: "75-100"
+      carbs_grams: "175-210"
+      fiber_grams: "25-30"
+      hydration_oz: "80-100"
+      dha_mg: "200-300"
+      iron_mg: "27-30"
+      calcium_mg: "1000"
+    
+    energy_focus:
+      note: "Fatigue at peak—focus on sustained energy through complex carbs + protein"
+      strategy: "Small frequent meals, protein at every meal, stable blood sugar"
+  
+  appointments:
+    frequency: "Every 2 weeks (until Week 36)"
+    typical_tests:
+      - "Fundal height (~34 cm)"
+      - "Fetal heart rate"
+      - "Blood pressure"
+      - "Urine test"
+      - "Weight"
+      - "Baby position (head-down check)"
+    
+    discuss:
+      - "Birth plan"
+      - "Labor signs—when to call, when to go to hospital"
+      - "Group B strep test next visit (Week 36-37)"
+      - "Transition to weekly appointments at Week 36"
+  
+  prep_tasks:
+    this_week:
+      - "Hospital pre-registration complete"
+      - "Attorney consultation for will/trust"
+      - "Baby shower RSVP coordination (if shower upcoming)"
+    
+    upcoming:
+      - "Hospital bag 75% gathered by end of week"
+      - "Car seat purchase decision"
+      - "Nursery furniture status check"
+
+week_35:
+  trimester: 3
+  development:
+    size:
+      weight_lbs: 5.25
+      weight_kg: 2.4
+      length_inches: 18
+      length_cm: 46
+      comparison: "honeydew melon"
+    
+    major_milestones:
+      - "Lungs fully mature—ready for breathing"
+      - "Kidneys fully developed"
+      - "Liver functioning"
+      - "Circulatory system complete"
+      - "Rapid weight gain continues"
+    
+    organs:
+      lungs: "Fully mature, ready for life outside womb"
+      brain: "Continued development (continues through age 25!)"
+      kidneys: "Processing fluids efficiently"
+      liver: "Producing waste-processing enzymes"
+    
+    physical:
+      weight_gain: "~0.5 lbs/week"
+      fat: "~10% body fat (15% at birth)"
+      movement: "Less space—more rolls/pushes, fewer flips"
+    
+    viability:
+      survival_rate: "99%"
+      nicu_likelihood: "possible but brief"
+      prognosis: "excellent"
+  
+  symptoms:
+    common:
+      - "All Week 34 symptoms continue or intensify"
+      - "Baby may 'drop' (lightening)—relieves breathing, increases pelvic pressure"
+      - "Nesting instinct often peaks"
+    
+    concerning: # Same as previous weeks
+  
+  nutrition: # Same as previous weeks
+  
+  appointments:
+    frequency: "Every 2 weeks (last before weekly begins)"
+    typical_tests:
+      - "Standard checkup (fundal height, heart rate, BP, urine, weight)"
+      - "Baby position confirmation"
+    
+    discuss:
+      - "Birth plan finalization"
+      - "Labor signs review"
+      - "Postpartum plans"
+  
+  prep_tasks:
+    this_week:
+      - "Baby shower (if scheduled)"
+      - "Hospital bag 90% complete"
+      - "Car seat purchased"
+      - "Legal documents finalized"
+
+week_36:
+  trimester: 3
+  development:
+    size:
+      weight_lbs: 5.75
+      weight_kg: 2.6
+      length_inches: 18.5
+      length_cm: 47
+      comparison: "romaine lettuce head"
+    
+    major_milestones:
+      - "Considered 'early term' starting Week 37"
+      - "Skull bones still soft/flexible for birth"
+      - "Digestive system ready for breast milk/formula"
+      - "Immune system boosted by maternal antibodies"
+    
+    viability:
+      status: "Almost full term (Week 37)"
+      survival_rate: "99%+"
+      complications: "minimal if born now"
+  
+  symptoms:
+    common:
+      - "Baby dropping (lightening)—easier breathing, more pelvic pressure"
+      - "Increased vaginal discharge"
+      - "Possible mucus plug loss (can happen weeks before labor)"
+      - "More frequent Braxton Hicks"
+  
+  nutrition: # Same as previous weeks
+  
+  appointments:
+    frequency: "WEEKLY from now until delivery"
+    typical_tests:
+      - "Group B strep test (vaginal/rectal swab)"
+      - "Cervical checks may begin (dilation, effacement)"
+      - "Baby position confirmation (head-down ideal)"
+      - "Non-stress test (NST) if indicated"
+    
+    discuss:
+      - "Labor signs"
+      - "When to call, when to go to hospital"
+      - "Birth preferences"
+      - "Postpartum plans"
+  
+  prep_tasks:
+    complete_by_now:
+      - "Hospital bag 100% packed"
+      - "Car seat installed and inspected"
+      - "Nursery functional"
+      - "Freezer meals stocked"
+      - "Postpartum supplies ready"
+      - "Legal documents complete"
+    
+    ongoing:
+      - "REST as primary activity"
+      - "Monitor for labor signs"
+      - "Weekly OB appointments"
+
+week_37:
+  trimester: 3
+  status: "FULL TERM—baby could arrive any day"
+  development:
+    size:
+      weight_lbs: 6.25
+      weight_kg: 2.85
+      length_inches: 19
+      length_cm: 48
+    
+    note: "Baby is considered full term—organs mature, ready for birth"
+  
+  symptoms:
+    labor_signs:
+      possible:
+        - "Regular contractions (5-10 min apart, lasting 60+ seconds)"
+        - "Water breaking (gush or trickle of amniotic fluid)"
+        - "Bloody show (mucus plug with blood-tinged discharge)"
+        - "Intense pelvic pressure"
+        - "Low back pain different from usual"
+      
+      when_to_call_ob:
+        - "Regular contractions 10 min apart for 1 hour"
+        - "Water breaks"
+        - "Significant bleeding"
+        - "Decreased fetal movement"
+      
+      when_to_go_hospital:
+        - "Contractions 5 min apart for 1 hour"
+        - "Water breaks"
+        - "Severe pain"
+        - "Any concerning symptoms"
+  
+  appointments:
+    frequency: "Weekly"
+    typical:
+      - "Cervical checks (dilation, effacement, station)"
+      - "Baby position"
+      - "Non-stress test (if indicated)"
+  
+  prep_tasks:
+    ready_state:
+      - "Hospital bag in car"
+      - "Phone charged, charger packed"
+      - "All contacts in speed dial"
+      - "Camera/video equipment ready"
+      - "Baby outfit and going-home outfit packed"
+    
+    activity:
+      - "REST primary focus"
+      - "Monitor kick counts daily"
+      - "Watch for labor signs"
+      - "Stay within 30 min of hospital"
+
+week_38:
+  status: "Full term"
+  development:
+    size:
+      weight_lbs: 6.75
+      weight_kg: 3.05
+      length_inches: 19.5
+      length_cm: 49.5
+  
+  note: "Baby fully developed, gaining weight, ready for birth"
+  
+  appointments:
+    frequency: "Weekly"
+    may_include:
+      - "Cervical checks"
+      - "Membrane sweep (if cervix favorable and patient consents)"
+      - "Discussion of induction if going past 41 weeks"
+
+week_39:
+  status: "Full term"
+  development:
+    size:
+      weight_lbs: 7.25
+      weight_kg: 3.3
+      length_inches: 20
+      length_cm: 50
+  
+  note: "Optimal time for delivery if spontaneous labor occurs"
+
+week_40:
+  status: "Due date"
+  development:
+    size:
+      weight_lbs: 7.5
+      weight_kg: 3.4
+      length_inches: 20
+      length_cm: 51
+  
+  note: "Due date—only 5% of babies arrive exactly on due date"
+  
+  appointments:
+    discuss:
+      - "Induction scheduling if not in labor by 41 weeks"
+      - "Twice-weekly NST monitoring if going past due date"
+
+week_41:
+  status: "Post-term (past due)"
+  note: "Most providers recommend induction between 41-42 weeks"
+  monitoring:
+    - "Twice-weekly NST"
+    - "Amniotic fluid check"
+    - "Biophysical profile"
+  
+  typical_plan:
+    - "Induction offered/scheduled"
+    - "Increased monitoring"
+    - "Assessment of cervical readiness"
+
+# FIRST AND SECOND TRIMESTER (For reference post-Emma)
+
+week_1-4:
+  trimester: 1
+  note: "Weeks 1-2 are pre-conception (calculated from LMP). Week 3-4 is conception and implantation."
+  
+week_5-8:
+  trimester: 1
+  note: "Embryonic period. Major organs begin forming. First ultrasound typically Week 8."
+  
+week_9-13:
+  trimester: 1
+  note: "Fetal period begins Week 9. First trimester ends Week 13. Many symptoms peak then improve."
+
+week_14-27:
+  trimester: 2
+  note: "Second trimester—often 'honeymoon period' with more energy, fewer symptoms. Anatomy scan Week 18-20."
