@@ -1,12 +1,7 @@
 ---
 name: ioc-distributor
-description: Distribute IOCs to security tools in actionable formats (CSV, STIX, Suricata, YARA). Export from OpenCTI and push to configured endpoints.
-allowed-tools: Bash(curl:*,jq:*) Read Write
-metadata:
-  author: roundtable
-  version: "1.0"
-  tier: security
-  compatibility: Requires OPENCTI_TOKEN for IOC export
+description: >
+  Distribute IOCs to security tools in actionable formats (CSV, STIX, Suricata, YARA). Export from OpenCTI and push to configured endpoints.
 ---
 
 # IOC Distributor

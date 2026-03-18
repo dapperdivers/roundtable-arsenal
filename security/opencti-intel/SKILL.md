@@ -1,12 +1,7 @@
 ---
 name: opencti-intel
-description: Query the OpenCTI threat intelligence platform for STIX 2.1 data including indicators, vulnerabilities, malware, reports, and attack patterns. Use for threat briefings, CVE lookups, IOC searches, and platform statistics.
-allowed-tools: Bash(curl:*,jq:*) Read
-metadata:
-  author: roundtable
-  version: "2.1"
-  tier: security
-  compatibility: Requires OPENCTI_URL and OPENCTI_TOKEN environment variables. OpenCTI 5.x+
+description: >
+  Query the OpenCTI threat intelligence platform for STIX 2.1 data including indicators, vulnerabilities, malware, reports, and attack patterns. Use for threat briefings, CVE lookups, IOC searches, and platform statistics.
 ---
 
 # OpenCTI Intelligence

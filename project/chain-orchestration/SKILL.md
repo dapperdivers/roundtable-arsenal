@@ -1,10 +1,7 @@
 ---
 name: chain-orchestration
-description: Orchestrate multi-knight task chains. Dispatch parallel or sequential tasks to knights, aggregate results, and produce unified reports. Use when a mission requires multiple knights working together.
-metadata:
-  author: roundtable
-  version: "1.0"
-  tier: project
+description: >
+  Orchestrate multi-knight task chains. Dispatch parallel or sequential tasks to knights, aggregate results, and produce unified reports. Use when a mission requires multiple knights working together.
 ---
 
 # Chain Orchestration

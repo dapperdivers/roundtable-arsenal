@@ -1,12 +1,7 @@
 ---
 name: vault-indexer
-description: SQLite-based Obsidian vault indexer for fast structured queries. Use for searching notes by tag, date, path, or keyword instead of slow grep-based searching.
-allowed-tools: Bash(sqlite3:*,python3:*,yq:*) Read Write
-metadata:
-  author: roundtable
-  version: "1.0"
-  tier: shared
-  compatibility: Requires sqlite3, python3, yq. Vault mounted at /vault (read-only).
+description: >
+  SQLite-based Obsidian vault indexer for fast structured queries. Use for searching notes by tag, date, path, or keyword instead of slow grep-based searching.
 ---
 
 # vault-indexer

@@ -1,19 +1,6 @@
 ---
 name: shodan-recon
-version: 1.0.0
 description: Query Shodan for internet-facing asset intelligence, exposure analysis, and threat enrichment.
-triggers:
-  - shodan
-  - exposed services
-  - internet exposure
-  - attack surface
-  - open ports
-  - asset discovery
-  - IP reconnaissance
-tools:
-  - bash
-env:
-  - SHODAN_API_KEY
 ---
 
 # Shodan Reconnaissance

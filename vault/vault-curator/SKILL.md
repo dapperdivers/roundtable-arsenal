@@ -1,11 +1,7 @@
 ---
 name: vault-curator
-description: Curate the Obsidian vault — enforce frontmatter, manage tags, add wikilinks, process inbox, detect duplicates, and maintain vault health. The core skill for Second Brain organization.
-allowed-tools: Bash Read Write Edit Glob Grep
-metadata:
-  author: roundtable
-  version: "1.0"
-  tier: vault
+description: >
+  Curate the Obsidian vault — enforce frontmatter, manage tags, add wikilinks, process inbox, detect duplicates, and maintain vault health. The core skill for Second Brain organization.
 ---
 
 # Vault Curator

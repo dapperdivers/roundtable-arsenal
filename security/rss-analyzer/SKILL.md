@@ -1,12 +1,7 @@
 ---
 name: rss-analyzer
-description: Fetch and analyze cybersecurity RSS feeds for threat intelligence. Use for daily/weekly security briefings or ad-hoc feed analysis. Categorizes entries by severity, relevance, and threat type.
-allowed-tools: Bash(curl:*,python3:*) Read Write
-metadata:
-  author: roundtable
-  version: "2.1"
-  tier: security
-  compatibility: Requires Python 3.9+, feedparser and beautifulsoup4 libraries
+description: >
+  Fetch and analyze cybersecurity RSS feeds for threat intelligence. Use for daily/weekly security briefings or ad-hoc feed analysis. Categorizes entries by severity, relevance, and threat type.
 ---
 
 # RSS Analyzer

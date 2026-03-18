@@ -1,12 +1,7 @@
 ---
 name: metrics-server-debug
-description: Debug metrics-server failures including kubelet connectivity, TLS certificate issues, and API availability problems. Use when kubectl top shows errors or HPA can't get metrics.
-allowed-tools: Bash(kubectl:*,curl:*,openssl:*,jq:*) Read
-metadata:
-  author: roundtable
-  version: "1.0"
-  tier: infra
-  compatibility: Requires kubectl with cluster-admin or metrics-server namespace access
+description: >
+  Debug metrics-server failures including kubelet connectivity, TLS certificate issues, and API availability problems. Use when kubectl top shows errors or HPA can't get metrics.
 ---
 
 # Metrics Server Debug

@@ -1,12 +1,7 @@
 ---
 name: bridgewater-negotiation
-description: Prepare for Bridgewater Associates offer negotiation with hedge fund compensation intelligence, anchoring strategies, and counter-offer frameworks. Use when an offer is imminent or received from Bridgewater.
-allowed-tools: Read
-metadata:
-  author: roundtable
-  version: "1.0"
-  tier: career
-  compatibility: Reference-only skill, no external dependencies
+description: >
+  Prepare for Bridgewater Associates offer negotiation with hedge fund compensation intelligence, anchoring strategies, and counter-offer frameworks. Use when an offer is imminent or received from Bridgewater.
 ---
 
 # Bridgewater Negotiation Playbook

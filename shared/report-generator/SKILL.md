@@ -1,11 +1,7 @@
 ---
 name: report-generator
-description: Generate formatted markdown reports from templates and structured data. Use when producing standardized output documents like briefings, assessments, or digests.
-allowed-tools: Bash Read Write
-metadata:
-  author: roundtable
-  version: "2.0"
-  tier: shared
+description: >
+  Generate formatted markdown reports from templates and structured data. Use when producing standardized output documents like briefings, assessments, or digests.
 ---
 
 # Report Generator

@@ -1,11 +1,7 @@
 ---
 name: weather-fetch
-description: Fetch current weather and forecast data for any location. Use for morning reports or when weather information is needed.
-allowed-tools: Bash(curl:*)
-metadata:
-  author: roundtable
-  version: "2.0"
-  tier: intel
+description: >
+  Fetch current weather and forecast data for any location. Use for morning reports or when weather information is needed.
 ---
 
 # Weather Fetch

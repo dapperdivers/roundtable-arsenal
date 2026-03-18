@@ -1,12 +1,7 @@
 ---
 name: financial-tracker
-description: JSON-based financial state tracking with debt balances, interest calculation, budget vs actual comparison, and payment deadline monitoring. Use for financial briefings and debt payoff tracking.
-allowed-tools: Bash(jq:*,bc:*,date:*) Read Write
-metadata:
-  author: roundtable
-  version: "1.0"
-  tier: finance
-  compatibility: Requires jq, bc. Financial data stored as JSON in /data/finance-state.json.
+description: >
+  JSON-based financial state tracking with debt balances, interest calculation, budget vs actual comparison, and payment deadline monitoring. Use for financial briefings and debt payoff tracking.
 ---
 
 # Financial Tracker Skill

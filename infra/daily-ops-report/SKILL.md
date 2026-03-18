@@ -1,13 +1,7 @@
 ---
 name: daily-ops-report
-description: Daily infrastructure report for Tristan. Cluster health, Flux status, deployments, PRs, certs, backups — structured and actionable.
-allowed-tools: Bash Read Write
-metadata:
-  author: tristan
-  version: "1.0"
-  tier: knight
-  knight: sir-tristan
-  domain: infrastructure
+description: >
+  Daily infrastructure report for Tristan. Cluster health, Flux status, deployments, PRs, certs, backups — structured and actionable.
 ---
 
 # Daily Infrastructure Report — Tristan

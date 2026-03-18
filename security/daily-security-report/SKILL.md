@@ -1,13 +1,7 @@
 ---
 name: daily-security-report
-description: Generate Galahad's daily security briefing. Aggregates data from OpenCTI, RSS feeds, CISA KEV, and CVE sources into a structured report following the shared daily-reports contract.
-allowed-tools: Bash(curl:*) Read Write
-metadata:
-  author: roundtable
-  version: "1.0"
-  tier: security
-  knight: sir-galahad
-  schedule: "0600 UTC daily"
+description: >
+  Generate Galahad's daily security briefing. Aggregates data from OpenCTI, RSS feeds, CISA KEV, and CVE sources into a structured report following the shared daily-reports contract.
 ---
 
 # Daily Security Report — Galahad

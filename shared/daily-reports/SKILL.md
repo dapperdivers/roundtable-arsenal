@@ -1,11 +1,7 @@
 ---
 name: daily-reports
-description: Shared output contract for knight daily reports. Defines the JSON envelope and markdown template ALL knights must use when producing daily briefings.
-allowed-tools: Bash Read Write
-metadata:
-  author: roundtable
-  version: "1.0"
-  tier: shared
+description: >
+  Shared output contract for knight daily reports. Defines the JSON envelope and markdown template ALL knights must use when producing daily briefings.
 ---
 
 # Daily Reports — Output Contract

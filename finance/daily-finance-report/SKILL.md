@@ -1,16 +1,6 @@
 ---
 name: daily-finance-report
-description: "The Steward's Ledger — Percival's daily finance and admin briefing for the household"
-allowed-tools: Bash Read Write
-metadata:
-  author: percival
-  version: "1.0"
-  tier: knight
-  knight: percival
-  depends:
-    - shared/daily-reports
-    - finance/paperless-ops
-    - finance/tax-prep
+description: The Steward's Ledger — Percival's daily finance and admin briefing for the household
 ---
 
 # The Steward's Ledger — Daily Finance Report

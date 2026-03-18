@@ -1,13 +1,7 @@
 ---
 name: threat-intel-api
-description: Automated RSS feed monitoring and threat intelligence API integration. Polls security feeds, queries NVD/CISA KEV APIs, and enriches IOCs with multi-source context. Use for real-time threat detection and intelligence gathering.
-allowed-tools: Bash(curl:*,wget:*) Read Write
-metadata:
-  author: roundtable
-  version: "1.0"
-  tier: security
-  compatibility: Requires internet access, curl, jq. Optional feedparser for Python-based RSS parsing.
-  knight: kay
+description: >
+  Automated RSS feed monitoring and threat intelligence API integration. Polls security feeds, queries NVD/CISA KEV APIs, and enriches IOCs with multi-source context. Use for real-time threat detection and intelligence gathering.
 ---
 
 # Threat Intelligence API Integration

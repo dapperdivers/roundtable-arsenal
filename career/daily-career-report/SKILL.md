@@ -1,17 +1,7 @@
 ---
 name: daily-career-report
-description: Sir Lancelot's daily career intelligence briefing — campaign tracking, interview prep, market intel, and battle plans
-allowed-tools: Bash Read Write Search
-metadata:
-  author: sir-lancelot
-  version: "1.0"
-  tier: knight
-  knight: sir-lancelot
-  domain: career
-  depends:
-    - shared/daily-reports
-    - career/interview-prep
-    - career/linkedin-ops
+description: >
+  Sir Lancelot's daily career intelligence briefing — campaign tracking, interview prep, market intel, and battle plans
 ---
 
 # Daily Career Intelligence Report

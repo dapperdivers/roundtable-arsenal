@@ -1,12 +1,7 @@
 ---
 name: web-search
-description: Search the web using the cluster SearXNG metasearch engine. Use when you need to find current information, research topics, or verify facts. Aggregates Google, Brave, DuckDuckGo, and more.
-allowed-tools: Bash(curl:*)
-metadata:
-  author: roundtable
-  version: "1.0"
-  tier: shared
-  compatibility: Requires access to searxng.selfhosted.svc.cluster.local
+description: >
+  Search the web using the cluster SearXNG metasearch engine. Use when you need to find current information, research topics, or verify facts. Aggregates Google, Brave, DuckDuckGo, and more.
 ---
 
 # Web Search (SearXNG)

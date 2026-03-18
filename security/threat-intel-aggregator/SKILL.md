@@ -1,12 +1,7 @@
 ---
 name: threat-intel-aggregator
-description: Automated threat intelligence aggregation from RSS feeds, NVD API, CISA KEV, and OpenCTI. Correlate findings, deduplicate, and generate daily digests.
-allowed-tools: Bash(curl:*,jq:*) Read Write
-metadata:
-  author: roundtable
-  version: "1.0"
-  tier: security
-  compatibility: Requires network access to threat intel sources
+description: >
+  Automated threat intelligence aggregation from RSS feeds, NVD API, CISA KEV, and OpenCTI. Correlate findings, deduplicate, and generate daily digests.
 ---
 
 # Threat Intelligence Aggregator

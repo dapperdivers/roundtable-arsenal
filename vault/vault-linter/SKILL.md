@@ -1,11 +1,7 @@
 ---
 name: vault-linter
-description: Scan the Obsidian vault for structural issues — missing frontmatter, broken tags, orphan notes, stale content, duplicates. Produces actionable health reports.
-allowed-tools: Bash Read Glob Grep
-metadata:
-  author: roundtable
-  version: "1.0"
-  tier: vault
+description: >
+  Scan the Obsidian vault for structural issues — missing frontmatter, broken tags, orphan notes, stale content, duplicates. Produces actionable health reports.
 ---
 
 # Vault Linter

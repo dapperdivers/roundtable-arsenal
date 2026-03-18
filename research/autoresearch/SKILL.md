@@ -1,16 +1,7 @@
 ---
 name: autoresearch
 description: >
-  Autonomous skill optimization through iterative experimentation.
-  Inspired by Karpathy's autoresearch — systematically improves knight
-  skills by modifying instructions, testing via dispatch, scoring results,
-  and keeping only improvements.
-allowed-tools: Bash(curl:*,nats:*) Read Write
-metadata:
-  author: tim-the-enchanter
-  version: "1.0"
-  tier: research
-  inspiration: https://github.com/karpathy/autoresearch
+  Autonomous skill optimization through iterative experimentation. Inspired by Karpathy's autoresearch — systematically improves knight skills by modifying instructions, testing via dispatch, scoring results, and keeping only improvements.
 ---
 
 # Autoresearch — Autonomous Skill Optimization

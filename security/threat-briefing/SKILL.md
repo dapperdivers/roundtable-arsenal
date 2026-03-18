@@ -1,12 +1,7 @@
 ---
 name: threat-briefing
-description: Generate daily and weekly security threat intelligence briefings. Combines OpenCTI data, RSS feeds, and CVE analysis into structured reports. Use for scheduled briefing tasks or on-demand threat summaries.
-allowed-tools: Bash(curl:*) Read Write
-metadata:
-  author: roundtable
-  version: "2.2-exp2"
-  tier: security
-  compatibility: Requires opencti-intel skill and OPENCTI_TOKEN
+description: >
+  Generate daily and weekly security threat intelligence briefings. Combines OpenCTI data, RSS feeds, and CVE analysis into structured reports. Use for scheduled briefing tasks or on-demand threat summaries.
 ---
 
 # Threat Briefing Generator

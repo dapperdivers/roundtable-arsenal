@@ -1,13 +1,7 @@
 ---
 name: daily-home-report
-description: Bedivere's daily household status report. Covers priorities, calendar, Home Assistant systems, tasks, household intelligence, and cross-knight coordination.
-allowed-tools: Bash Read Write
-metadata:
-  author: bedivere
-  version: "1.0"
-  tier: home
-  knight: sir-bedivere
-  depends: shared/daily-reports
+description: >
+  Bedivere's daily household status report. Covers priorities, calendar, Home Assistant systems, tasks, household intelligence, and cross-knight coordination.
 ---
 
 # Daily Home Report — Bedivere 🏠

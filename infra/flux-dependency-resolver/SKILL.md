@@ -1,12 +1,7 @@
 ---
 name: flux-dependency-resolver
-description: Trace Flux Kustomization dependency chains to identify root blockers when deployments are stuck. Use when debugging Flux reconciliation failures or dependency issues.
-allowed-tools: Bash(kubectl:*,jq:*) Read
-metadata:
-  author: roundtable
-  version: "1.0"
-  tier: infra
-  compatibility: Requires kubectl with flux CRDs. Access to flux-system namespace.
+description: >
+  Trace Flux Kustomization dependency chains to identify root blockers when deployments are stuck. Use when debugging Flux reconciliation failures or dependency issues.
 ---
 
 # Flux Dependency Resolver

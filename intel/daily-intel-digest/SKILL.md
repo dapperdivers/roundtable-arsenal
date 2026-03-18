@@ -1,13 +1,7 @@
 ---
 name: daily-intel-digest
-description: Kay's daily intelligence briefing. Synthesizes space weather, tech/security news, research activity, and operational context into an analytical morning digest. Signal over noise.
-allowed-tools: Bash(curl:*) Bash(python3:*) Read Write
-metadata:
-  author: sir-kay
-  version: "1.0"
-  tier: intel
-  knight: sir-kay
-  schedule: "0600 CST daily"
+description: >
+  Kay's daily intelligence briefing. Synthesizes space weather, tech/security news, research activity, and operational context into an analytical morning digest. Signal over noise.
 ---
 
 # Daily Intelligence Digest

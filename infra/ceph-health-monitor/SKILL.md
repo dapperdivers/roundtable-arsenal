@@ -1,12 +1,7 @@
 ---
 name: ceph-health-monitor
-description: Monitor Rook-Ceph cluster health via kubectl exec into rook-ceph-tools pod. Use for storage health checks, OSD analysis, pool monitoring, and alert generation.
-allowed-tools: Bash(kubectl:*,jq:*) Read
-metadata:
-  author: roundtable
-  version: "1.0"
-  tier: infra
-  compatibility: Requires kubectl access to rook-ceph namespace and rook-ceph-tools deployment
+description: >
+  Monitor Rook-Ceph cluster health via kubectl exec into rook-ceph-tools pod. Use for storage health checks, OSD analysis, pool monitoring, and alert generation.
 ---
 
 # Ceph Health Monitor

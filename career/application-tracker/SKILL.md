@@ -1,12 +1,7 @@
 ---
 name: application-tracker
-description: Track job applications, interview stages, contacts, and follow-ups as a JSON database. Use for managing active job searches, generating status reports, and tracking interview pipelines.
-allowed-tools: Bash(jq:*,date:*) Read Write
-metadata:
-  author: roundtable
-  version: "1.0"
-  tier: career
-  compatibility: Requires jq. Data stored in /data/applications.json.
+description: >
+  Track job applications, interview stages, contacts, and follow-ups as a JSON database. Use for managing active job searches, generating status reports, and tracking interview pipelines.
 ---
 
 # Application Tracker

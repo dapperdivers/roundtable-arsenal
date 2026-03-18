@@ -1,11 +1,7 @@
 ---
 name: web-fetch
-description: Fetch and extract readable content from a URL. Use when you need to read a webpage, article, or documentation page. Strips HTML to plain text.
-allowed-tools: Bash(curl:*)
-metadata:
-  author: roundtable
-  version: "1.0"
-  tier: shared
+description: >
+  Fetch and extract readable content from a URL. Use when you need to read a webpage, article, or documentation page. Strips HTML to plain text.
 ---
 
 # Web Fetch

@@ -1,12 +1,7 @@
 ---
 name: web-browser
-description: Control a headless Chrome browser for web automation via agent-browser CLI. Use when curl is insufficient — JS-rendered pages, SPAs, form interaction, screenshots, or complex web scraping requiring a real browser engine.
-allowed-tools: Bash(agent-browser:*)
-metadata:
-  author: roundtable
-  version: "1.0"
-  tier: shared
-  compatibility: Requires browser capability enabled on knight (spec.capabilities.browser=true). Chrome sidecar must be running.
+description: >
+  Control a headless Chrome browser for web automation via agent-browser CLI. Use when curl is insufficient — JS-rendered pages, SPAs, form interaction, screenshots, or complex web scraping requiring a real browser engine.
 ---
 
 # Web Browser Automation

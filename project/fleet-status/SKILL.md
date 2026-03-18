@@ -1,10 +1,7 @@
 ---
 name: fleet-status
-description: Check the health and status of all Round Table knights by pinging them via NATS. Use to verify fleet readiness before dispatching chains.
-metadata:
-  author: roundtable
-  version: "1.0"
-  tier: project
+description: >
+  Check the health and status of all Round Table knights by pinging them via NATS. Use to verify fleet readiness before dispatching chains.
 ---
 
 # Fleet Status Check

@@ -1,11 +1,7 @@
 ---
 name: prenatal-newborn-wellness
-description: Track pregnancy milestones, nutrition, appointments, and newborn care through first 90 days. Use for weekly updates, hospital prep, warning signs, pediatric schedules, and postpartum wellness guidance.
-metadata:
-  author: roundtable
-  version: "1.0"
-  tier: wellness
-  compatibility: Reference data in references/pregnancy-weeks.yaml
+description: >
+  Track pregnancy milestones, nutrition, appointments, and newborn care through first 90 days. Use for weekly updates, hospital prep, warning signs, pediatric schedules, and postpartum wellness guidance.
 ---
 
 # Prenatal & Newborn Wellness Skill

@@ -1,11 +1,7 @@
 ---
 name: solar-weather
-description: Monitor space weather from NOAA SWPC including solar flares, geomagnetic storms, CMEs, and aurora forecasts. Use for morning reports or when space weather conditions are relevant.
-allowed-tools: Bash(curl:*) Bash(python3:*) Read
-metadata:
-  author: roundtable
-  version: "2.0"
-  tier: intel
+description: >
+  Monitor space weather from NOAA SWPC including solar flares, geomagnetic storms, CMEs, and aurora forecasts. Use for morning reports or when space weather conditions are relevant.
 ---
 
 # Solar Weather

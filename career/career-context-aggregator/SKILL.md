@@ -1,12 +1,7 @@
 ---
 name: career-context-aggregator
-description: Aggregate career context from the Obsidian vault into a single quick-reference dashboard. Use before interviews, negotiations, or career planning sessions to load all relevant context in 30 seconds.
-allowed-tools: Bash(find:*,grep:*,cat:*) Read
-metadata:
-  author: roundtable
-  version: "1.0"
-  tier: career
-  compatibility: Requires vault mounted at /vault with career notes in standard paths
+description: >
+  Aggregate career context from the Obsidian vault into a single quick-reference dashboard. Use before interviews, negotiations, or career planning sessions to load all relevant context in 30 seconds.
 ---
 
 # Career Context Aggregator

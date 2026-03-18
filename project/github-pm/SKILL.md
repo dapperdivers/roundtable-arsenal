@@ -1,10 +1,7 @@
 ---
 name: github-pm
-description: Manage Round Table GitHub project — create/update issues, track milestones, review PRs, and maintain the roadmap. Uses gh CLI.
-metadata:
-  author: roundtable
-  version: "1.0"
-  tier: project
+description: >
+  Manage Round Table GitHub project — create/update issues, track milestones, review PRs, and maintain the roadmap. Uses gh CLI.
 ---
 
 # GitHub Project Management
