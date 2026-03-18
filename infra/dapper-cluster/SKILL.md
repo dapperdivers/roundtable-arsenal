@@ -5,9 +5,12 @@ description: >
   Enforces file naming, folder structure, Flux Kustomization patterns, HelmRelease
   conventions, component reuse, and namespace layout. Use when creating new apps,
   modifying existing deployments, adding HelmReleases, writing Flux Kustomizations,
-  or reviewing dapper-cluster PRs. Triggers: "add an app", "deploy to cluster",
-  "new helmrelease", "dapper-cluster", "homelab", "flux kustomization",
-  "create namespace", "cluster manifest".
+  adding ExternalSecrets, configuring VolSync backups, setting up Authentik auth,
+  configuring ingress (internal/external), or reviewing dapper-cluster PRs.
+  Triggers: "add an app", "deploy to cluster", "new helmrelease", "dapper-cluster",
+  "homelab", "flux kustomization", "create namespace", "cluster manifest",
+  "volsync backup", "externalsecret", "security context", "ingress class",
+  "authentik auth".
 ---
 
 # dapper-cluster Conventions
@@ -92,7 +95,20 @@ spec:
   timeout: 10m
 ```
 
-Add VolSync components when app needs persistent backup:
+#### dependsOn Common Targets
+
+Add these based on what the app needs:
+
+| Dependency | Namespace | When to add |
+|-----------|-----------|-------------|
+| `external-secrets-stores` | `external-secrets` | App has ExternalSecret (almost always) |
+| `cloudnative-pg-cluster` | `database` | App uses PostgreSQL |
+| `volsync` | `volsync-system` | App uses VolSync backups |
+| `dragonfly-cluster` | `database` | App uses Dragonfly/Redis |
+
+#### VolSync Components
+
+Add when app needs persistent backup:
 
 ```yaml
   components:
@@ -101,7 +117,21 @@ Add VolSync components when app needs persistent backup:
   postBuild:
     substitute:
       APP: *app
-      VOLSYNC_CAPACITY: 15Gi
+      VOLSYNC_CAPACITY: 5Gi    # 1Gi config-only, 5Gi default, 10-20Gi large DBs
+```
+
+#### Gatus Health Check Components
+
+Add when app has an ingress you want monitored:
+
+```yaml
+  components:
+    - ../../../../flux/components/gatus/guarded    # or gatus/external for public
+  postBuild:
+    substitute:
+      APP: *app
+      GATUS_SUBDOMAIN: <subdomain>                 # optional, overrides app name
+      GATUS_DOMAIN: ${SECRET_DOMAIN}               # match the app's domain var
 ```
 
 ### app/helmrelease.yaml (app-template pattern)
@@ -184,6 +214,42 @@ spec:
         type: emptyDir
 ```
 
+### Ingress: Internal vs External
+
+| className | DNS Target | Use When |
+|-----------|-----------|----------|
+| `internal` | `internal.${DOMAIN}` | LAN-only access (most apps) |
+| `external` | `external.${DOMAIN}` | Public-facing via Cloudflare tunnel |
+
+The `external-dns.alpha.kubernetes.io/target` annotation **must match** the className:
+- `className: internal` → `internal.${SECRET_DOMAIN}`
+- `className: external` → `external.${SECRET_DOMAIN}`
+
+### Domain Variables by Namespace
+
+| Namespace | Domain Variable | TLS Secret |
+|-----------|----------------|------------|
+| Most namespaces | `${SECRET_DOMAIN}` | `${SECRET_DOMAIN/./-}-tls` |
+| `media` | `${SECRET_DOMAIN_MEDIA}` | `${SECRET_DOMAIN_MEDIA/./-}-tls` |
+| `chelonianlabs`/`chelonian` | `${SECRET_DOMAIN_CHELONIAN}` | `${SECRET_DOMAIN_CHELONIAN/./-}-tls` |
+| Personal apps (resume) | `${SECRET_DOMAIN_PERSONAL}` | `${SECRET_DOMAIN_PERSONAL/./-}-tls` |
+
+Additional domains exist (`SECRET_DOMAIN_DIVING`, `SECRET_DOMAIN_WIFE`) but are rarely used for new apps.
+
+### Authentik Auth Annotations
+
+For apps that need SSO/auth protection, add to ingress annotations:
+
+```yaml
+ingress:
+  app:
+    annotations:
+      authentik.home.arpa/internal: "true"
+      nginx.ingress.kubernetes.io/auth-signin: "https://<app>.${DOMAIN}/outpost.goauthentik.io/start?rd=$scheme://$http_host$escaped_request_uri"
+```
+
+Use this for admin UIs and apps without built-in auth (prowlarr, radarr, tdarr, bazarr, etc.).
+
 ### app/externalsecret.yaml
 
 ```yaml
@@ -207,6 +273,39 @@ spec:
   dataFrom:
     - find:
         path: INFISICAL_KEY
+```
+
+#### ClusterSecretStore Variants
+
+| Store Name | Use When |
+|-----------|----------|
+| `infisical` | Default — most app secrets |
+| `infisical-postgres` | App needs PostgreSQL credentials + connection strings |
+| `infisical-authentik` | App needs Authentik OAuth credentials |
+
+#### dataFrom Patterns
+
+```yaml
+# Match by prefix (all keys starting with APP_)
+dataFrom:
+  - find:
+      name:
+        regexp: ^APP_.*
+
+# Match by exact path
+dataFrom:
+  - find:
+      path: SPECIFIC_KEY_NAME
+
+# Multiple sources combined
+dataFrom:
+  - find:
+      name:
+        regexp: ^ATUIN.*
+  - find:
+      path: POSTGRES_SUPER_USER
+  - find:
+      path: POSTGRES_SUPER_PASS
 ```
 
 ### app/kustomization.yaml
@@ -254,8 +353,6 @@ Add `volsync.backube/privileged-movers: "true"` annotation if apps in namespace 
 
 ## Common Components
 
-### Flux Components (referenced via `components:` in namespace kustomization.yaml or ks.yaml)
-
 | Component | Path | Purpose |
 |-----------|------|---------|
 | common | `../../flux/components/common` | Alerts, OCI repos (app-template), SOPS, cluster substitutions |
@@ -263,25 +360,6 @@ Add `volsync.backube/privileged-movers: "true"` annotation if apps in namespace 
 | volsync/operations | `../../../../flux/components/volsync/operations` | ReplicationSource/Destination |
 | gatus/external | `../../../../flux/components/gatus/external` | External health check config |
 | gatus/guarded | `../../../../flux/components/gatus/guarded` | Auth-guarded health check config |
-
-### Cluster Substitution Variables
-
-Available in any HelmRelease/manifest via `${VAR}`:
-- `${TIME_ZONE}` — Cluster timezone
-- `${SECRET_DOMAIN}` — Primary domain
-- `${SECRET_DOMAIN_MEDIA}` — Media domain
-- `${SECRET_DOMAIN_CHELONIAN}` — ChelonianLabs domain
-
-### Chart Source
-
-Most apps use **app-template** (bjw-s) via the shared OCIRepository:
-```yaml
-chartRef:
-  kind: OCIRepository
-  name: app-template
-```
-
-For apps with their own Helm chart, define `ocirepository.yaml` in `app/` or reference from `flux/meta/repositories/helm/`.
 
 ## Multi-Component Apps
 
@@ -328,3 +406,5 @@ Do NOT leave stale `-bak` suffixed directories (e.g. `archon-bak`).
 8. **Schema comments** at top of every YAML file (`# yaml-language-server: $schema=...`)
 9. **Common component** must be included in every namespace kustomization
 10. **ExternalSecret targets `<app>-secret`** — consistent naming, referenced via `envFrom` in HelmRelease
+11. **Match ingress class to DNS target** — `internal` ↔ `internal.${DOMAIN}`, `external` ↔ `external.${DOMAIN}`
+12. **Match domain variable to namespace** — media apps use `SECRET_DOMAIN_MEDIA`, chelonian uses `SECRET_DOMAIN_CHELONIAN`
