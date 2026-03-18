@@ -231,7 +231,6 @@ The `external-dns.alpha.kubernetes.io/target` annotation **must match** the clas
 |-----------|----------------|------------|
 | Most namespaces | `${SECRET_DOMAIN}` | `${SECRET_DOMAIN/./-}-tls` |
 | `media` | `${SECRET_DOMAIN_MEDIA}` | `${SECRET_DOMAIN_MEDIA/./-}-tls` |
-| `chelonianlabs`/`chelonian` | `${SECRET_DOMAIN_CHELONIAN}` | `${SECRET_DOMAIN_CHELONIAN/./-}-tls` |
 | Personal apps (resume) | `${SECRET_DOMAIN_PERSONAL}` | `${SECRET_DOMAIN_PERSONAL/./-}-tls` |
 
 Additional domains exist (`SECRET_DOMAIN_DIVING`, `SECRET_DOMAIN_WIFE`) but are rarely used for new apps.
@@ -407,4 +406,3 @@ Do NOT leave stale `-bak` suffixed directories (e.g. `archon-bak`).
 9. **Common component** must be included in every namespace kustomization
 10. **ExternalSecret targets `<app>-secret`** — consistent naming, referenced via `envFrom` in HelmRelease
 11. **Match ingress class to DNS target** — `internal` ↔ `internal.${DOMAIN}`, `external` ↔ `external.${DOMAIN}`
-12. **Match domain variable to namespace** — media apps use `SECRET_DOMAIN_MEDIA`, chelonian uses `SECRET_DOMAIN_CHELONIAN`
