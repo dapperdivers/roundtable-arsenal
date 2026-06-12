@@ -10,6 +10,9 @@ The deliverable is a **PR**, or an explicit, well-argued "not a bug" verdict.
 Follow coding-agent rules (branch, tests, PR); this skill adds the Night Watch
 specifics.
 
+Read your repo's codebase skill first: `coding/roundtable-operator`,
+`coding/pi-knight-runtime`, `coding/roundtable-ui`, or `coding/roundtable-arsenal`.
+
 ## Per-repo procedure
 
 | Repo | Verify before push |

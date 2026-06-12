@@ -74,14 +74,21 @@ transient infra (node reboot) — anything a repo PR can't fix.
 
 ## Repo routing and tiers
 
+Fixes go to the **roundtable-dev team** — the table that owns the platform.
+Missions reach knights on any table (dispatch uses the knight's own subjects).
+
 | Target | Repo | Fixer | Tier |
 |---|---|---|---|
-| pi-knight runtime (task.failed, timeouts, entrypoint) | dapperdivers/pi-knight | coder-1 | 2 |
-| dashboard API/UI | dapperdivers/roundtable-ui | coder-1 | 2 |
-| skills/prompts | dapperdivers/roundtable-arsenal | coder-1 | 1 |
-| operator (reconcile errors, CRD logic) | dapperdivers/roundtable | coder-2 | 3 |
-| nats-bridge | dapperdivers/nats-bridge | coder-2 | 2 |
-| deployment config (env, resources, model names) | dapperdivers/dapper-cluster — `kubernetes/apps/roundtable/**` ONLY | coder-2 | 1 |
+| pi-knight runtime (task.failed, timeouts, entrypoint) | dapperdivers/pi-knight | rt-runtime | 2 |
+| dashboard API/UI | dapperdivers/roundtable-ui | rt-ui | 2 |
+| skills/prompts | dapperdivers/roundtable-arsenal | rt-arsenal | 1 |
+| operator (reconcile errors, CRD logic) | dapperdivers/roundtable | rt-operator | 3 |
+| nats-bridge | dapperdivers/nats-bridge | rt-runtime | 2 |
+| deployment config (env, resources, model names) | dapperdivers/dapper-cluster — `kubernetes/apps/roundtable/**` ONLY | rt-operator | 1 |
+
+An incident spanning multiple repos gets ONE Mission to **rt-lead** (the team
+architect) with all the evidence — rt-lead breaks it down for the team. That
+still counts as one of the night's 3 dispatches.
 
 ## Dispatch — Mission CR
 
@@ -119,8 +126,8 @@ spec:
     PR body includes "Night-Watch-Fingerprint: <fp>". If you conclude this is
     NOT a real bug, say so explicitly with reasoning instead of forcing a PR.
   knights:
-    - name: <coder-1|coder-2>
-  roundTableRef: personal
+    - name: <rt-runtime|rt-ui|rt-operator|rt-arsenal|rt-lead>
+  roundTableRef: roundtable-dev
   costBudgetUSD: "3"
   timeout: 7200
   ttl: 172800
