@@ -56,7 +56,7 @@ You MUST output valid JSON matching this schema:
       "name": "knight-name",
       "domain": "security",
       "role": "reconnaissance",
-      "model": "claude-sonnet-4-20250514",
+      "model": "openrouter/deepseek/deepseek-v3.2",
       "nixPackages": ["nmap", "curl", "jq"],
       "skills": ["security/reconnaissance.md", "shared/base.md"],
       "concurrency": 2,
@@ -98,7 +98,11 @@ The infrastructure handles installation and mounting. You just reason about **wh
 
 ## Model Selection Guide
 
-- **Research/analysis**: claude-sonnet-4-20250514 (fast, good reasoning)
-- **Complex implementation**: claude-sonnet-4-20250514 (code generation)
-- **Critical decisions**: claude-opus-4-20250514 (deep reasoning, expensive)
-- **Simple tasks**: claude-haiku-35-20241022 (fast, cheap)
+**Default: omit `model` entirely** — the knight inherits the fleet's base-template
+model (a cheap OpenRouter model chosen for testing). Only set a model when the
+task genuinely needs more capability:
+
+- **Most tasks (default)**: omit `model` — inherits base template (cheap, OpenRouter)
+- **Explicit cheap choice**: openrouter/deepseek/deepseek-v3.2
+- **Harder reasoning/implementation**: openrouter/anthropic/claude-haiku-4.5
+- **Critical decisions only**: openrouter/anthropic/claude-sonnet-4.5 (expensive — justify in the plan)
