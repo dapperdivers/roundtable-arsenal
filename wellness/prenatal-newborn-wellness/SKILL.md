@@ -8,6 +8,15 @@ description: >
 
 **Comprehensive support for pregnancy through first 90 days of newborn care.**
 
+> ## ⚠️ CURRENT STATUS — READ FIRST
+>
+> **Emma was born April 14, 2026. The prenatal phase is OVER.**
+> Compute her age in weeks/days from 2026-04-14 and use ONLY the
+> postpartum/newborn guidance below. Never calculate pregnancy weeks, never
+> reference the due date, hospital bags, or labor signs. If any instruction
+> or prior report implies she is unborn, it is stale — trust this status
+> (and the vault: `/vault/Personal/Family/Emma.md`).
+
 ## Overview
 
 This skill enables AI agents to provide evidence-based wellness guidance through two critical phases:
@@ -132,13 +141,12 @@ Detailed guides in `/references/` directory:
 ```yaml
 # User profile for personalization
 pregnancy:
+  status: "complete"  # Emma arrived — prenatal functions are historical only
   due_date: "2026-04-29"
-  current_week: 34
-  trimester: 3
-  
+
 baby:
   name: "Emma"
-  birth_date: null  # Set after birth
+  birth_date: "2026-04-14"
   
 mother:
   name: "Sara"

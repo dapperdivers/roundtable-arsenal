@@ -77,6 +77,15 @@ Every daily report MUST be a JSON object matching this schema. See [`assets/cont
 | `data_sources` | array | ✅ | Sources consulted (APIs, sites, feeds) |
 | `confidence` | enum | ✅ | `high`, `medium`, or `low` |
 
+### Resolutions (mandatory — see `shared/evidence-verification`)
+
+If anything reported on a previous day is now fixed/closed/no longer present,
+the `highlights` array MUST lead with an entry starting exactly `RESOLVED: `
+for each such item. Resolutions are first-class signal: downstream synthesis
+only sees your highlights, and a dropped resolution becomes a phantom issue
+that is carried forward indefinitely. RESOLVED entries never count against
+any highlight-count guidance.
+
 ### Priority Guidelines
 
 - **high** — Requires Tim's attention today. Actionable items, active threats, significant changes.

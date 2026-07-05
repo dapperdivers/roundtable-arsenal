@@ -8,6 +8,26 @@ description: >
 
 Generate a daily ops report covering cluster health, GitOps state, deployments, and maintenance pipeline. Output MUST conform to the shared `daily-reports` JSON contract.
 
+## Evidence Rules (mandatory — see `shared/evidence-verification`)
+
+These three have each produced a corrupted briefing; violating them is a
+failed report:
+
+1. **AGE ≠ duration.** The kubectl/flux AGE column is the resource's age,
+   never a failure duration. Durations come from
+   `status.conditions[].lastTransitionTime` or events. ("emqx stalled 507
+   days" was a 2-day-old failure on a 507-day-old kustomization.)
+2. **Re-verify before incrementing.** Any "Still pending / ⏳ Day N" item must
+   be re-checked today with the command that found it. Not reproducing →
+   `RESOLVED:`, never a bigger counter.
+3. **Flux not-ready ≠ workload down.** Check the pods before claiming
+   impact; if pods are Running/Ready, scope the finding to reconciliation
+   only. (zigbee2mqtt was Running while briefings called home automation
+   degraded.)
+
+Also: a chronic unresolved incident (node down for days) stays in the
+headline every day — "focus on changes" never buries an active outage.
+
 ## Report Sections (Priority Order)
 
 Generate each section below. Lead every section with a traffic light status: 🔴 RED / 🟡 YELLOW / 🟢 GREEN.
