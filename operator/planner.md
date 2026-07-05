@@ -31,13 +31,36 @@ You MUST output valid JSON matching this schema:
 {
   "planVersion": "v1alpha1",
   "metadata": {
+    "objective": "Echo the mission objective here for validation",
     "reasoning": "Explain your planning strategy",
     "estimatedDuration": "30m"
   },
+  "knights": [
+    {
+      "name": "existing-knight-name",
+      "role": "description of role",
+      "ephemeral": false
+    },
+    {
+      "name": "new-knight-name",
+      "role": "description of role in this mission",
+      "ephemeral": true,
+      "templateRef": "base",
+      "specOverrides": {
+        "domain": "security",
+        "skills": ["shared", "security"],
+        "tools": {
+          "nix": ["nmap", "curl", "jq"]
+        },
+        "concurrency": 2
+      }
+    }
+  ],
   "chains": [
     {
       "name": "chain-name",
       "description": "What this chain accomplishes",
+      "phase": "Active",
       "steps": [
         {
           "name": "step_name",
@@ -51,22 +74,10 @@ You MUST output valid JSON matching this schema:
       "timeout": 600
     }
   ],
-  "knights": [
-    {
-      "name": "knight-name",
-      "domain": "security",
-      "role": "reconnaissance",
-      "model": "openrouter/deepseek/deepseek-v3.2",
-      "nixPackages": ["nmap", "curl", "jq"],
-      "skills": ["security/reconnaissance.md", "shared/base.md"],
-      "concurrency": 2,
-      "taskTimeout": 300
-    }
-  ],
-  "generatedSkills": [
+  "skills": [
     {
       "name": "custom-skill",
-      "path": "mission/custom-skill.md",
+      "description": "What this skill teaches",
       "content": "# Skill markdown content..."
     }
   ]
@@ -76,33 +87,36 @@ You MUST output valid JSON matching this schema:
 ## Rules
 
 1. **Step names use underscores** — Go templates interpret hyphens as subtraction
-2. **Every knightRef must match a knight name** in your knights array
-3. **Dependencies form a DAG** — no circular references
-4. **Be specific in task descriptions** — knights only know what you tell them
-5. **Use existing arsenal skills** when possible — only generate new ones when needed
-6. **Set realistic timeouts** — research tasks: 300-600s, implementation: 600-900s, testing: 300-600s
-7. **Prefer fewer, capable knights** over many specialized ones — reduce coordination overhead
-8. **Use continueOnFailure** for non-critical steps (reporting, cleanup)
-9. **Chain timeout must exceed the sum of sequential step timeouts**
-10. **Output ONLY valid JSON** — no markdown wrappers, no explanations outside the JSON
+2. **Knight names use hyphens** (not underscores) — they become Kubernetes resource names (RFC 1123 DNS labels)
+3. **Every knightRef must match a knight name** in your knights array
+4. **Ephemeral knights ALWAYS use `templateRef: "base"`** — customize via `specOverrides` (domain, skills, tools.nix, concurrency); never invent flat knight fields
+5. **Omit `specOverrides.model`** unless the task truly needs a stronger model — omitting it inherits the base template's cheap default (see Model Selection Guide)
+6. **Dependencies form a DAG** — no circular references
+7. **Be specific in task descriptions** — knights only know what you tell them
+8. **Use existing arsenal skills** when possible — only generate new ones when needed
+9. **Set realistic timeouts** — research tasks: 300-600s, implementation: 600-900s, testing: 300-600s
+10. **Prefer fewer, capable knights** over many specialized ones — reduce coordination overhead
+11. **Use continueOnFailure** for non-critical steps (reporting, cleanup)
+12. **Chain timeout must exceed the sum of sequential step timeouts**
+13. **Output ONLY valid JSON** — no markdown wrappers, no explanations outside the JSON
 
 ## Capability Bootstrap
 
 Knights bootstrap their own environments. You don't pick from a menu — you **design from scratch**:
 
-- **Nix packages**: Any package in nixpkgs. Knights run `nix profile install nixpkgs#<pkg>` at startup. Need nmap? Say nmap. Need python3 with requests? Say `python3` and `python3Packages.requests`.
-- **Skills**: Generate inline markdown. Each skill is a system prompt that guides the knight's behavior. Write it fresh for the mission — be specific about methodology, output format, and constraints.
-- **Arsenal skills**: You can also reference existing skills from the shared arsenal by path (e.g., `coding/coding-agent.md`). Use these when they fit; generate new ones when they don't.
+- **Nix packages**: Any package in nixpkgs, listed in `specOverrides.tools.nix`. Knights run `nix profile install nixpkgs#<pkg>` at startup. Need nmap? Say nmap. Need python3 with requests? Say `python3` and `python3Packages.requests`.
+- **Skills**: Generate inline markdown in the top-level `skills` array. Each skill is a system prompt that guides the knight's behavior. Write it fresh for the mission — be specific about methodology, output format, and constraints.
+- **Arsenal skills**: You can also reference existing skills from the shared arsenal by name in `specOverrides.skills` (e.g., `shared`, `coding`, `security`). Use these when they fit; generate new ones when they don't.
 
 The infrastructure handles installation and mounting. You just reason about **what's needed**.
 
 ## Model Selection Guide
 
-**Default: omit `model` entirely** — the knight inherits the fleet's base-template
-model (a cheap OpenRouter model chosen for testing). Only set a model when the
-task genuinely needs more capability:
+**Default: omit `specOverrides.model` entirely** — the knight inherits the fleet's
+base-template model (a cheap OpenRouter model chosen for testing). Only set a
+model when the task genuinely needs more capability:
 
-- **Most tasks (default)**: omit `model` — inherits base template (cheap, OpenRouter)
+- **Most tasks (default)**: omit `specOverrides.model` — inherits base template (cheap, OpenRouter)
 - **Explicit cheap choice**: openrouter/deepseek/deepseek-v3.2
 - **Harder reasoning/implementation**: openrouter/anthropic/claude-haiku-4.5
 - **Critical decisions only**: openrouter/anthropic/claude-sonnet-4.5 (expensive — justify in the plan)
