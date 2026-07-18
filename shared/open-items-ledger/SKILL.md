@@ -85,6 +85,48 @@ only reads. Keep the file valid JSON — if you can, sanity-check with
   problem genuinely recurs, add a **new item** with a fresh `first_seen` and
   a note referencing the old id — its history restarts; it is not "Day 140".
 
+## Stale-Item Decay
+
+Items that linger without progress accumulate briefing noise. Apply these
+decay rules every report:
+
+### 7-day threshold
+An `open` item with `last_verified` ≥ 7 days old (and no verification
+command, or `verification: null`):
+- **Downgrade severity**: high→medium, medium→low.
+- **low-severity items** at 7+ days stale: **auto-resolve** with
+  `resolved_on` = today, `notes` = "auto-resolved: low-severity item
+  unverified for 7+ days".
+
+### 14-day threshold
+Any `open` item with `first_seen` ≥ 14 days ago, regardless of severity
+or reconfirmation status:
+- **Auto-resolve** with `notes` = "auto-resolved: 14-day staleness
+  threshold (last_verified YYYY-MM-DD)".
+- Move to resolved — the item consumed 14 days of briefing space without
+  forward motion.
+
+### 30-day hard cap
+Any `open` item with `first_seen` ≥ 30 days ago: **force-resolve**.
+No exceptions — it has consumed a month of daily attention.
+
+### Items immune to decay
+These patterns never auto-decay:
+- CISA KEV entries (id starts with `cve-` and the CVE is actively in KEV)
+- Active cluster infrastructure failures (node down, CrashLoopBackOff)
+- Legal/tax deadlines with fixed statutory due dates
+- Items the user explicitly set `notes` to contain `"decay: false"`
+
+### Decay reporting
+When staleness auto-resolves an item, list it in your summary's
+`resolved` array so the synthesizer can print it as ✅ RESOLVED:
+```json
+{"id": "old-item-id", "evidence": "Stale-item decay (N days unreconfirmed)"}
+```
+
+Decay is a cleanup mechanism, not a bug fix. The item didn't get solved —
+it just stopped being worth daily attention.
+
 ## Finishing
 
 - Update `meta.last_report` to today when you write your vault report.

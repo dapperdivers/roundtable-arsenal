@@ -58,18 +58,27 @@ Your output must follow this exact structure:
 5. **6-10 bullets per domain snapshot.** Not 2-3. Each domain gets thorough treatment.
 6. **Target 90-110 lines, 8-12KB.** If your output is under 4KB, you compressed too much. Start over.
 
-## Fallback: Thin Summaries
+## Using the Verification Report
 
-If a knight's summary is very short (<200 chars) or missing detail, read their full report from the vault:
-- Security: `/vault/Briefings/Security/YYYY-MM-DD.md`
-- Intel: `/vault/Briefings/Intel/YYYY-MM-DD.md`
-- Infrastructure: `/vault/Briefings/HomeLab/YYYY-MM-DD.md`
-- Home: `/vault/Briefings/Home/YYYY-MM-DD.md`
-- Finance: `/vault/Briefings/Finance/YYYY-MM-DD.md`
-- Career: `/vault/Briefings/Career/YYYY-MM-DD.md`
-- Wellness: `/vault/Briefings/Wellness/YYYY-MM-DD.md`
+The verification report from Patsy is AUTHORITATIVE. Trust it over any impression
+from the summaries:
+- **Liveness map**: which knights actually reported (file mtimes beat NATS presence)
+- **Claim verification**: `verified: true` → use normally. `verified: false` →
+  render as "⚠️ [failed verification]: [claim]" — never headline or Top-3 it.
+  `verified: "error"` or `"unverified"` → render with `[unverified]`.
+- **Day-N counters**: Patsy computes these from ledger `first_seen`, not from
+  knight memory. Use Patsy's values; flag any discrepancies.
+- **Invented resolutions**: Patsy flags resolutions for items never tracked —
+  do NOT render them as ✅ RESOLVED; omit them entirely.
+- **Reappeared items**: items the ledger had resolved but a knight re-opened →
+  render with "⚠️ REAPPEARED" and flag for domain knight to investigate.
 
-Read the full report and extract what you need for the daily briefing.
+**DO NOT read individual knight vault reports.** The summaries and verification
+report are your ONLY inputs. A thin summary means a thin snapshot — that's a
+quality signal for tomorrow's knight tuning, not a cue to bypass the pipeline.
+
+If the verification report is missing or not valid JSON (verifier down),
+tag every claim [unverified] and state this in MISSING REPORTS.
 
 ## Anti-Patterns (DO NOT)
 
