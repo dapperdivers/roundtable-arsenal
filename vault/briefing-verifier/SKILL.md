@@ -72,36 +72,84 @@ Flag as anomalies: a previously-`resolved` item appearing as open in today's
 summary, `first_seen` values that changed, Day-N claims that don't equal
 `today - first_seen`, and counters that moved backwards.
 
-## Step 5 — The verification report
+## Step 5 — The verification report (TWO outputs)
 
-Your NATS response is EXACTLY one JSON object — no prose around it:
+You produce TWO outputs, in this exact order:
+
+### 5a — FULL REPORT (disk: /vault/Briefings/Ledger/verification-YYYY-MM-DD.json)
+
+Write the complete, unabridged verification report to disk using your
+`write` tool. This is the canonical record — every verified claim, every
+command output, liveness truth, cluster deployment checks, ledger stamps.
+Use the exact schema from your last successful run as a template. Target
+15-25KB; completeness beats brevity here.
+
+### 5b — COMPACT SUMMARY (NATS response — MUST FIT IN 4000 CHARS)
+
+Your NATS response must be EXACTLY one JSON object under 4000 characters —
+no prose, no code fences, no markdown. The controller truncates at 4000
+chars; larger payloads render as unparseable broken JSON that the
+synthesizer cannot use.
 
 ```json
 {
   "verifier": "patsy",
   "date": "YYYY-MM-DD",
-  "verifier_status": "ok | degraded",
+  "verifier_status": "ok|degraded",
   "liveness": {
-    "security": { "summary": "received | missing | unstructured",
-                   "vault_report_today": true,
-                   "last_report": "YYYY-MM-DD", "gap_days": 0 }
+    "security": { "summary": "received", "vault_report_today": true,
+                   "last_report": "YYYY-MM-DD", "gap_days": 0 },
+    "intel": { "summary": "received", "vault_report_today": true,
+               "last_report": "YYYY-MM-DD", "gap_days": 0 },
+    "infra": { "summary": "received", "vault_report_today": true,
+               "last_report": "YYYY-MM-DD", "gap_days": 0 },
+    "home": { "summary": "received", "vault_report_today": true,
+              "last_report": "YYYY-MM-DD", "gap_days": 0 },
+    "finance": { "summary": "received", "vault_report_today": true,
+                 "last_report": "YYYY-MM-DD", "gap_days": 0 },
+    "career": { "summary": "received", "vault_report_today": true,
+               "last_report": "YYYY-MM-DD", "gap_days": 0 },
+    "wellness": { "summary": "received", "vault_report_today": true,
+                  "last_report": "YYYY-MM-DD", "gap_days": 0 }
   },
-  "claims": [
-    { "domain": "infra", "id": "ledger-id-or-null", "claim": "one line",
-      "verified": true, "command": "what you ran", "observed": "1-line result",
-      "day_n": 3 }
+  "verification_summary": {
+    "total_checked": 15,
+    "verified_true": 14,
+    "verified_false": 0,
+    "verified_partial": 1,
+    "unverifiable": 37
+  },
+  "key_findings": [
+    { "domain": "infra", "id": "node-small4-transient-notready",
+      "verified": true, "day_n": 1 },
+    { "domain": "infra", "id": "volsync-pvc-provisioning-failures",
+      "verified": true, "day_n": 1 }
   ],
-  "resolved_confirmed": [ { "domain": "infra", "id": "...", "holds": true } ],
-  "anomalies": [ "one line each" ],
-  "notes": "only if something impaired verification (RBAC denial, timeout)"
+  "resolved_confirmed": [
+    { "domain": "infra", "id": "emqx-cluster-stall", "holds": true,
+      "day_n": null }
+  ],
+  "anomalies": [ "invented_resolution: none" ],
+  "fleet_counts": {
+    "kustomizations": 128,
+    "helmreleases": 103,
+    "nodes": 11,
+    "pods_running": 274,
+    "pods_total": 277
+  },
+  "full_report": "/vault/Briefings/Ledger/verification-YYYY-MM-DD.json"
 }
 ```
 
 - `liveness` has all seven domains, always.
-- `claims` carries every item you checked, including failures — `verified:
-  false` entries are the most valuable ones.
+- `key_findings` carries the 10-15 most important verified items — not
+  all 52+. Keep individual claims under 120 chars each. The full report
+  on disk has everything; this is the synthesizer's working set.
 - `day_n` is present only where the ledger has a non-null `first_seen`;
   compute it, never copy it.
-- If you ran out of time or tools, emit the report anyway with
+- BUDGET: 4000 characters MAX. Before sending, count: `wc -c` of your
+  JSON. If >4000, trim key_findings to the most critical items, shorten
+  claim text, or compress whitespace. A truncated response is useless.
+- If you ran out of time or tools, emit the compact summary anyway with
   `verifier_status: "degraded"` and what you couldn't check in `notes` —
   a partial report beats none; everything unchecked stays unverified.

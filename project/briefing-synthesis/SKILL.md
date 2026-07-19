@@ -58,10 +58,21 @@ Your output must follow this exact structure:
 5. **6-10 bullets per domain snapshot.** Not 2-3. Each domain gets thorough treatment.
 6. **Target 90-110 lines, 8-12KB.** If your output is under 4KB, you compressed too much. Start over.
 
-## Using the Verification Report
+## Using the Verification Report (COMPACT NATS format)
 
-The verification report from Patsy is AUTHORITATIVE. Trust it over any impression
-from the summaries:
+The verification report from Patsy uses a COMPACT format for NATS delivery:
+- **`liveness`** — which knights reported (authoritative; file mtimes beat NATS presence)
+- **`verification_summary`** — total_checked, verified_true/false/partial counts
+- **`key_findings`** — 10-15 most important verified items (not all 52+)
+- **`resolved_confirmed`** — previously-resolved items that still hold
+- **`anomalies`** — counter drift, invented resolutions, reappeared items
+- **`fleet_counts`** — authoritative kustomizations/helmreleases/nodes/pods counts
+- **`full_report`** — path to the complete report on disk
+
+The compact format is an abbreviated working set. The full report at
+/vault/Briefings/Ledger/verification-YYYY-MM-DD.json has complete detail.
+
+Trust it over any impression from the summaries:
 - **Liveness map**: which knights actually reported (file mtimes beat NATS presence)
 - **Claim verification**: `verified: true` → use normally. `verified: false` →
   render as "⚠️ [failed verification]: [claim]" — never headline or Top-3 it.
@@ -73,12 +84,22 @@ from the summaries:
 - **Reappeared items**: items the ledger had resolved but a knight re-opened →
   render with "⚠️ REAPPEARED" and flag for domain knight to investigate.
 
-**DO NOT read individual knight vault reports.** The summaries and verification
-report are your ONLY inputs. A thin summary means a thin snapshot — that's a
-quality signal for tomorrow's knight tuning, not a cue to bypass the pipeline.
+## Verifier-Down Recovery
 
-If the verification report is missing or not valid JSON (verifier down),
-tag every claim [unverified] and state this in MISSING REPORTS.
+**DO NOT read individual knight vault reports.** The summaries and verification
+report are your ONLY inputs — with ONE exception:
+
+If the verification report is missing, empty, or not valid JSON:
+1. Read `/vault/Briefings/Ledger/verification-YYYY-MM-DD.json` (today's date).
+   This is Patsy's disk-persisted full report — it exists even when the NATS
+   response failed (timeout, output-size truncation).
+2. If found and valid JSON: extract liveness, verified claims, anomalies,
+   Day-N counters, and resolved_confirmed. Tag source "[vault-fallback]" in
+   MISSING REPORTS.
+3. If not found (verifier never ran): tag every claim [unverified] and
+   state "Verifier down — no verification data." in MISSING REPORTS.
+
+Never read any other vault file — only this one fallback path is allowed.
 
 ## Anti-Patterns (DO NOT)
 
