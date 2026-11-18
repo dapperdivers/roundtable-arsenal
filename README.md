@@ -22,6 +22,7 @@ roundtable-arsenal/
 │   ├── cve-deep-dive/         # CVE vulnerability analysis
 │   ├── shodan-recon/          # Shodan asset reconnaissance
 │   ├── rss-analyzer/          # Security RSS feed analysis
+│   ├── morning-security-brief/ # Short daily brief: exploited vulns, KEV, your-stack CVEs (kagent)
 │   └── daily-security-report/ # Security daily report
 │
 ├── finance/                   # Percival — Tax prep & financial ops
@@ -40,6 +41,7 @@ roundtable-arsenal/
 │
 ├── home/                      # Bedivere — Household & life admin
 │   ├── household-ops/         # Home management
+│   ├── garden-advisor/        # This-week garden advice from your notes + forecast (kagent)
 │   └── daily-home-report/     # Home daily report
 │
 ├── research/                  # Kay — Deep research
@@ -53,6 +55,8 @@ roundtable-arsenal/
 │
 ├── vault/                     # Patsy — Vault curation
 │   ├── vault-curator/         # Obsidian vault maintenance
+│   ├── obsidian-conventions/  # Reading/citing a vault via MCPVault; ready-to-paste edits (kagent)
+│   ├── zettel-extraction/     # Atomic notes with verbatim takes, as JSON (kagent)
 │   └── vault-linter/          # Metadata & frontmatter linting
 │
 └── comms/                     # Communications
