@@ -40,8 +40,8 @@ change it unless a tool for writing is explicitly provided.
 ## What to trust
 
 - Prefer the owner's **curated notes**. Treat notes with `generated: true`, anything under
-  `Briefings/`, `Archive/Briefings/` or `NightWatch/`, and `Resources/Generated/` as
-  machine output: useful for context, not as the owner's view.
+  `Agents/` (briefings, Night Watch, knight research, generated catalogs) or
+  `Archive/Briefings/` as machine output: useful for context, not as the owner's view.
 - **"Current" lives in frontmatter**: `status` and `updated`, not the newest-looking text.
   `Archive/` is history.
 - Dates in notes are absolute (YYYY-MM-DD). Write absolute dates too, never "yesterday".
@@ -70,7 +70,7 @@ author: <pipeline-or-agent-slug>
 
 ## Gotchas
 
-- **Don't read the generated vault catalog whole** (`Resources/Generated/Vault Catalog.md`):
+- **Don't read the generated vault catalog whole** (`Agents/Generated/Vault Catalog.md`):
   it is tens of thousands of tokens. Search instead.
 - **Write tools may be absent** (read-only mode). Don't call or promise `write_note`,
   `patch_note`, `move_note`; say "paste this into …" instead.
