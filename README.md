@@ -1,6 +1,12 @@
 # Round Table Arsenal
 
-Skills and resources for Knights of the Round Table — AI agents running on the [pi-knight](https://github.com/dapperdivers/pi-knight) runtime.
+Skills and resources for Knights of the Round Table — AI agents running on the [pi-knight](https://github.com/roundtable-k8s/pi-knight) runtime.
+
+> **Round Table platform skills moved.** Skills for working on the Round Table
+> itself (operator/UI/runtime coding, chain orchestration, fleet status,
+> briefing synthesis, Night Watch, github-pm, the planner prompt) now live in
+> [roundtable-k8s/arsenal](https://github.com/roundtable-k8s/arsenal). This repo
+> keeps the personal domain packs plus `shared/`, which they depend on.
 
 All skills follow the open [Agent Skills](https://agentskills.io) standard.
 
