@@ -15,23 +15,23 @@ Scanning tools for vault health. Use these scripts to identify issues, then use 
 Scans the entire vault and produces a structured report.
 
 ```bash
-bash /workspace/skills/vault/vault-linter/scripts/vault-health.sh /vault
+bash /skills/vault/vault-linter/scripts/vault-health.sh /vault
 ```
 
 ### frontmatter-check.sh — Check frontmatter on specific files or folders
 
 ```bash
-bash /workspace/skills/vault/vault-linter/scripts/frontmatter-check.sh /vault/Projects
+bash /skills/vault/vault-linter/scripts/frontmatter-check.sh /vault/Projects
 ```
 
 ### find-orphans.sh — Find notes with no incoming or outgoing links
 
 ```bash
-bash /workspace/skills/vault/vault-linter/scripts/find-orphans.sh /vault
+bash /skills/vault/vault-linter/scripts/find-orphans.sh /vault
 ```
 
 ### find-duplicates.sh — Find notes with similar titles or content
 
 ```bash
-bash /workspace/skills/vault/vault-linter/scripts/find-duplicates.sh /vault
+bash /skills/vault/vault-linter/scripts/find-duplicates.sh /vault
 ```
