@@ -138,9 +138,15 @@ Output MUST conform to `shared/daily-reports` contract:
 
 ### Step 2: Render Markdown
 
-Use `templates/daily-digest.md` (at `/skills/intel/daily-intel-digest/templates/daily-digest.md`) to produce a human-readable vault report. Save to the knight workspace (`/skills` is read-only):
-- `/data/output/daily-intel-digest/YYYY-MM-DD.md` (`mkdir -p` the directory first)
-- Optionally publish to Tim's Obsidian vault
+Use `templates/daily-digest.md` (at `/skills/intel/daily-intel-digest/templates/daily-digest.md`) to produce a human-readable vault report. Save it under `$DIGEST_OUTPUT_DIR` (`/skills` is read-only):
+
+```bash
+OUT="${DIGEST_OUTPUT_DIR:-/data/output/daily-intel-digest}"
+mkdir -p "$OUT"
+# write "$OUT/$(date +%Y-%m-%d).md"
+```
+
+`DIGEST_OUTPUT_DIR` is set per knight (`spec.env`), e.g. a vault path such as `/vault/Briefings/Intel` to publish straight into Obsidian; it defaults to the knight workspace.
 
 ## Confidence Methodology
 
@@ -165,7 +171,7 @@ Kay is an intelligence analyst, not a news anchor:
 
 - **Generation:** 0600 CST daily
 - **Data window:** Previous 24 hours
-- **Delivery:** JSON to output directory, markdown to vault, summary to Tim's morning channel
+- **Delivery:** JSON to output directory, markdown to `$DIGEST_OUTPUT_DIR`, summary to the morning channel
 
 ## Dependencies
 
