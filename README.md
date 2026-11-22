@@ -15,8 +15,6 @@ All skills follow the open [Agent Skills](https://agentskills.io) standard.
 ```
 roundtable-arsenal/
 ├── shared/                    # Base capabilities (ALL knights)
-│   ├── knight-comms/          # Cross-knight collaboration (nats_request)
-│   ├── nats-comms/            # Out-of-band NATS messaging (nats_publish)
 │   ├── daily-reports/         # Daily briefing templates
 │   ├── report-generator/      # Template-based report rendering
 │   ├── web-search/            # SearXNG metasearch
@@ -129,13 +127,14 @@ spec:
 
 ### Native Tools
 
-Knights have three custom tools registered natively (not bash scripts):
+Knights have custom tools registered natively (not bash scripts):
 
 - **`nats_publish`** — Fire-and-forget NATS messaging
 - **`nats_request`** — Cross-knight collaboration (send task, wait for response)
 - **`spawn_subagent`** — In-process sub-agent for focused subtasks
+- **`browser_*`** — Headless Chrome automation (open, snapshot, click, fill, get_text, screenshot, eval, close) when the knight has `spec.capabilities.browser: true`
 
-The `knight-comms` and `nats-comms` skills document when and how to use these tools.
+The tools describe their own usage to the model (see `src/tools/` in [pi-knight](https://github.com/roundtable-k8s/pi-knight)); there is no separate skill for them.
 
 ## Skill Format (agentskills.io)
 
