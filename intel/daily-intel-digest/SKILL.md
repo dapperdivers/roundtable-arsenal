@@ -31,7 +31,7 @@ Produce a daily intelligence product that Tim can scan in 90 seconds and know wh
 
 ### 1. Space Weather
 ```bash
-cd /home/node/molty/repos/roundtable-arsenal/intel/solar-weather
+cd /skills/intel/solar-weather
 python3 scripts/solar-check.py summary
 python3 scripts/solar-check.py alerts
 python3 scripts/solar-check.py aurora
@@ -46,7 +46,7 @@ Extract: Kp index, solar wind speed, Bz, active alerts, aurora forecast, flare a
 
 ### 2. News Aggregation
 ```bash
-cd /workspace/skills/intel/news-aggregator
+cd /skills/intel/news-aggregator
 bash scripts/fetch-news.sh --hours 24 --category all --limit 15
 # OR if python3+feedparser available:
 # python3 scripts/fetch-news.py --hours 24 --category all
@@ -65,10 +65,10 @@ Search for the latest in gaming, movies, TV, and cool tech. Derek is a nerd — 
 
 ```bash
 # Use web search to find trending nerd culture news
-bash /workspace/skills/shared/web-search/scripts/search.sh "gaming news today 2026"
-bash /workspace/skills/shared/web-search/scripts/search.sh "new movie trailer announcements 2026"
-bash /workspace/skills/shared/web-search/scripts/search.sh "cool tech gadgets edge of innovation 2026"
-bash /workspace/skills/shared/web-search/scripts/search.sh "TV show renewals cancellations 2026"
+bash /skills/shared/web-search/scripts/search.sh "gaming news today 2026"
+bash /skills/shared/web-search/scripts/search.sh "new movie trailer announcements 2026"
+bash /skills/shared/web-search/scripts/search.sh "cool tech gadgets edge of innovation 2026"
+bash /skills/shared/web-search/scripts/search.sh "TV show renewals cancellations 2026"
 ```
 
 **Topics to cover (pick 3-5 best):**
@@ -86,13 +86,13 @@ bash /workspace/skills/shared/web-search/scripts/search.sh "TV show renewals can
 ### 4. Research Log
 Check Kay's memory files for completed research:
 ```bash
-cat /home/node/molty/memory/$(date -d yesterday +%Y-%m-%d).md 2>/dev/null
+cat /data/memory/$(date -d yesterday +%Y-%m-%d).md 2>/dev/null
 ```
 Extract any deep-research tasks completed, findings, and source counts.
 
 ### 4. Weather
 ```bash
-cd /home/node/molty/repos/roundtable-arsenal/intel/weather-fetch
+cd /skills/intel/weather-fetch
 bash scripts/get-weather.sh "Warrior, Alabama"
 ```
 Brief conditions + forecast. Keep it tight — 2-3 lines max.
@@ -138,8 +138,8 @@ Output MUST conform to `shared/daily-reports` contract:
 
 ### Step 2: Render Markdown
 
-Use `templates/daily-digest.md` to produce a human-readable vault report. Save to:
-- `/home/node/molty/repos/roundtable-arsenal/intel/daily-intel-digest/output/YYYY-MM-DD.md`
+Use `templates/daily-digest.md` (at `/skills/intel/daily-intel-digest/templates/daily-digest.md`) to produce a human-readable vault report. Save to the knight workspace (`/skills` is read-only):
+- `/data/output/daily-intel-digest/YYYY-MM-DD.md` (`mkdir -p` the directory first)
 - Optionally publish to Tim's Obsidian vault
 
 ## Confidence Methodology

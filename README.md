@@ -85,15 +85,47 @@ roundtable-arsenal/
 
 ## Architecture
 
-Knights run on the **pi-knight** runtime (Pi SDK). Skills are delivered via git-sync sidecar with per-knight filtering:
+Knights run on the **pi-knight** runtime (Pi SDK). The operator delivers skills
+from one or more **arsenals** (git repos of skills) and filters them per knight:
 
 ```
-git-sync → /arsenal (full repo)
-skill-filter sidecar → symlinks SKILL_CATEGORIES → /skills
+git-sync / git-sync-<name> (one sidecar per arsenal) → /arsenal/<name>   (full repo, read-only)
+skill-filter sidecar → /skills/<category>/<skill> symlinks    (only categories in spec.skills)
 pi-knight → discovers skills from /skills via Pi SDK
 ```
 
-Each knight only sees `shared/` plus its domain categories. Configured via `SKILL_CATEGORIES` env var on the skill-filter sidecar.
+- **`spec.arsenal`** — the primary arsenal. Its fields default to
+  `https://github.com/roundtable-k8s/arsenal` (`ref: main`, `period: 300s`), so
+  `arsenal: {}` gives the platform arsenal. Leave `spec.arsenal` out entirely and
+  only the `spec.arsenals` entries are synced.
+- **`spec.arsenals`** — optional extra arsenals (`name`, `repo`, `ref`, `period`,
+  `image`), merged after `spec.arsenal` in list order. `name` sets the sync path
+  `/arsenal/<name>` and sidecar `git-sync-<name>`; it defaults to the repo basename.
+- **Per-skill merge** — for every category in `spec.skills`, `/skills/<category>/<skill>`
+  links to the **last** arsenal that provides `<category>/<skill>`, so later
+  arsenals override individual skills without hiding the rest of the category.
+  The links are refreshed every 60s; skills no arsenal provides any more are pruned.
+- **Categories** — a knight only sees the categories listed in `spec.skills`
+  (list `shared` explicitly).
+
+This repo is meant to be layered **after** the platform arsenal: its domain packs
+add categories, and its copy of `shared/` overrides same-named platform skills
+per skill.
+
+```yaml
+apiVersion: ai.roundtable.io/v1alpha1
+kind: Knight
+metadata:
+  name: galahad
+spec:
+  # …other Knight fields omitted
+  skills: [shared, security]
+  arsenal: {}                  # roundtable-k8s/arsenal @ main (defaults)
+  arsenals:
+    - name: personal
+      repo: https://github.com/dapperdivers/roundtable-arsenal
+      ref: main
+```
 
 ### Native Tools
 

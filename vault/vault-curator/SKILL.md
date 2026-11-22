@@ -176,7 +176,7 @@ Briefings are ephemeral — they have a shelf life.
 ### vault-health.sh — Scan vault and report issues
 
 ```bash
-bash /workspace/skills/vault/vault-linter/scripts/vault-health.sh
+bash /skills/vault/vault-linter/scripts/vault-health.sh
 ```
 
 Reports: notes missing frontmatter, empty tags, orphan notes (no links in or out), stale inbox items, briefings due for archival.

@@ -86,7 +86,7 @@ description: Query the OpenCTI threat intelligence platform for STIX 2.1 data in
 
 Put runnable scripts here. They should be:
 - **Self-contained** — minimal external dependencies
-- **No jq** — OpenClaw/knight containers don't ship jq; use grep/sed/cut
+- **No jq** — Knight containers don't ship jq; use grep/sed/cut
 - **Executable** — `chmod +x` all scripts
 - **Documented** — include usage comments at the top
 
@@ -204,26 +204,40 @@ metadata:
 
 ## Git-Sync Delivery
 
-Each knight's pod has a git-sync sidecar that pulls from this repo. The knight's HelmRelease config specifies which tier directories to sync:
+Knights are configured through their **Knight CR**, not per-knight Helm values.
+The operator adds one git-sync sidecar per arsenal (syncing to `/arsenal/<name>`)
+and a skill-filter sidecar that links the categories in `spec.skills` into
+`/skills/<category>/<skill>`. The platform repo
+[roundtable-k8s/arsenal](https://github.com/roundtable-k8s/arsenal) is what
+`spec.arsenal` resolves to by default (`arsenal: {}`); this repo is added as a `spec.arsenals` entry after it. Merging is
+per skill — the last arsenal providing `<category>/<skill>` wins — so skills here
+override same-named platform skills while the rest of the category still comes
+through.
 
 ```yaml
 # Galahad (security) — gets shared + security
-gitSync:
-  repo: https://github.com/dapperdivers/roundtable-arsenal
-  paths:
-    - shared
-    - security
+spec:
+  skills: [shared, security]
+  arsenal: {}                    # roundtable-k8s/arsenal @ main (defaults)
+  arsenals:
+    - name: personal             # synced to /arsenal/personal
+      repo: https://github.com/dapperdivers/roundtable-arsenal
+      ref: main
+      period: 300s
 
 # Herald (intel/comms) — gets shared + intel + comms
-gitSync:
-  repo: https://github.com/dapperdivers/roundtable-arsenal
-  paths:
-    - shared
-    - intel
-    - comms
+spec:
+  skills: [shared, intel, comms]
+  arsenal: {}
+  arsenals:
+    - name: personal
+      repo: https://github.com/dapperdivers/roundtable-arsenal
 ```
 
-Skills land in `/workspace/skills/` where the knight-agent runtime discovers them automatically.
+Skills appear read-only under `/skills/<category>/<skill>/`, where the pi-knight
+runtime discovers them (links refresh every 60s). Reference bundled scripts by
+that path, e.g. `python3 /skills/intel/solar-weather/scripts/solar-check.py summary`. Write
+output to the knight's workspace (`/data`), never into `/skills` or `/arsenal`.
 
 ## Validation
 
